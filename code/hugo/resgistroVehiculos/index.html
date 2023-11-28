@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/grid.css" />
+    <title>Dar de alta un vehículo</title>
+    <script>
+        function previewImage() {
+            const input = document.getElementById('imagen');
+            const image = document.getElementById('imagen-img');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    image.src = reader.result;
+                    image.style.display = 'block';
+                    image.style.maxWidth = '100%';
+                    image.style.maxHeight = '100%';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                image.src = '';
+                image.style.display = 'none';
+            }
+        }
+
+        function toggleAdminMenu() {
+            var adminMenu = document.getElementById('admin-menu');
+            adminMenu.classList.toggle('active');
+            var closeMenu = document.getElementById('close-menu');
+            closeMenu.style.display = 'block';
+        }
+
+        function closeAdminMenu() {
+            var adminMenu = document.getElementById('admin-menu');
+            adminMenu.classList.remove('active');
+            var closeMenu = document.getElementById('close-menu');
+            closeMenu.style.display = 'none';
+        }
+    </script>
+    <!--<script src="ficheropruebas.js"></script>-->
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1">
+                    <a href="index.html">
+                        <div id="logo">
+                            <img src="img/logoBHEC.png" alt="imagen del logo">
+                        </div>
+                    </a>
+                </div>
+                <nav class="col-3"> <!-- Barra de navegación -->
+                </nav>
+                <div class="col-4">
+                </div>
+                <nav class="col-4"> <!-- Barra de navegación -->
+                    <ul>
+                        <li><a href="contacto.html"><img src="img/usuari.png"></a></li>
+                    </ul>
+                    <div id="mobile-menu-toggle" onclick="toggleAdminMenu()">&#9776;</div>
+                </nav>
+
+
+            </div>
+
+
+        </div>
+    </header>
+    <main class="container-fluid">
+        <div class="row">
+
+            <aside class="col-2 asideLeft">
+                <nav id="admin-menu">
+                    <h2>Menú de Administración</h2>
+
+                    <ul>
+                        <li><a href="wp-admin/index.php">Escritorio</a></li>
+                        <li><a href="wp-admin/post-new.php">Nueva Entrada</a></li>
+                        <li><a href="wp-admin/edit.php">Entradas</a></li>
+                        <li><a href="wp-admin/edit.php?post_type=page">Páginas</a></li>
+                        <li><a href="wp-admin/edit-comments.php">Comentarios</a></li>
+                        <li><a href="wp-admin/media-new.php">Biblioteca</a></li>
+                        <li><a href="wp-admin/themes.php">Apariencia</a></li>
+                        <li><a href="wp-admin/plugins.php">Plugins</a></li>
+                        <li><a href="wp-admin/users.php">Usuarios</a></li>
+                        <li><a href="wp-admin/options-general.php">Ajustes</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <section class="col-10">
+                <div class="row formulario">
+                    <h1>Dar de alta un nuevo vehículo</h1>
+
+                    <div class="col-4"> <!-- Nombre del vehículo -->
+                        <form method="post" enctype="multipart/form-data" action="index.js">
+                            <div>
+                                <label for="nombre-vehiculo">Nombre del vehículo<abbr title="required"
+                                        aria-label="required">*</abbr></label>
+                            </div>
+                            <div>
+                                <input type="text" required id="nombre-vehiculo" name="nombre-vehiculo"
+                                    pattern="^[A-Za-z0-9\s]+$" title="Solo se permiten letras, números y espacios" />
+                            </div>
+
+                            <!-- Marca del vehículo -->
+                            <div>
+                                <label for="marca">Marca<abbr title="required" aria-label="required">*</abbr></label>
+                            </div>
+                            <div>
+                                <input type="text" required id="marca" name="marca" pattern="^[A-Za-z0-9\s]+$"
+                                    title="Solo se permiten letras, números y espacios" />
+                            </div>
+
+                            <!-- Modelo del vehículo respecto a su marca -->
+                            <div>
+                                <label for="modelo">Modelo<abbr title="required" aria-label="required">*</abbr></label>
+                            </div>
+                            <div>
+                                <input type="text" required id="modelo" name="modelo" pattern="^[A-Za-z0-9\s]+$"
+                                    title="Solo se permiten letras, números y espacios" />
+                            </div>
+
+
+                            <!-- Matrícula Española 4 números y 3 letras -->
+                            <div>
+                                <label for="matricula">Matrícula <abbr title="required"
+                                        aria-label="required">*</abbr>:</label>
+                            </div>
+                            <div>
+                                <input type="text" required id="matricula" name="matricula" pattern="^\d{4}[A-Z]{3}$"
+                                    title="Debe contener 4 números seguidos de 3 letras en mayúsculas" />
+                            </div>
+
+
+                            <!-- Kilometraje que tiene el vehículo -->
+                            <div>
+                                <label for="kilometro">Kilómetros del vehículo <abbr title="required"
+                                        aria-label="required">*</abbr>:</label>
+                            </div>
+                            <div>
+                                <input type="number" required id="kilometro" name="kilometro" pattern="\d+"
+                                    title="Debe ser un número entero" min="1" />
+                            </div>
+
+
+                            <!-- Número de Bastidor del vehículo -->
+                            <div>
+                                <label for="numBast">Número de Bastidor <abbr title="required"
+                                        aria-label="required">*</abbr>:</label>
+                            </div>
+                            <div>
+                                <input type="text" required id="numBast" name="numBast" pattern="^[A-HJ-NPR-Z0-9]{17}$"
+                                    title="Debe contener 17 caracteres alfanuméricos" />
+                            </div>
+
+
+                            <!-- Fecha de la primera matriculación del vehículo -->
+                            <div>
+                                <label for="fPrimerMatric">Fecha de Primera Matrícula <abbr title="required"
+                                        aria-label="required">*</abbr>:</label>
+                            </div>
+                            <div>
+                                <input type="date" required id="fPrimerMatric" name="fPrimerMatric" />
+                            </div>
+
+                            <!-- Tipo de carburante -->
+                            <div>
+                                <label for="tipCarbur">Tipo de Carburante:</label>
+                            </div>
+                            <div>
+                                <select name="tipCarbur" id="tipCarbur">
+                                    <option value="diesel">Diesel</option>
+                                    <option value="gasolina" selected>Gasolina</option>
+                                    <option value="electrico">Eléctrico</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+
+                            <!-- Señalización del estado del vehículo, Nuevo / Segunda mano -->
+
+
+                            <!-- Señalización sobre el transporte incluido en el precio -->
+                            <div class="radio-group">
+                                <div>
+                                    <label for="transInc">Transporte incluido</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="transInc" value="Si" id="transInc-si">
+                                    <label for="transInc-si">Si</label>
+                                    <input type="radio" name="transInc" value="No" id="transInc-no">
+                                    <label for="transInc-no">No</label>
+                                </div>
+                                <div>
+                                    <label for="nuevo">Nuevo:</label>
+                                </div>
+                                <div> <input type="radio" name="nuevo" value="Si" id="nuevo-si">
+                                    <label for="nuevo-si">Si</label>
+                                    <input type="radio" name="nuevo" value="No" id="nuevo-no">
+                                    <label for="nuevo-no">No</label>
+                                </div>
+                            </div>
+
+                    </div>
+
+
+                    <div class="col-4">
+                        <!-- Imágenes del vehículo -->
+                        <div class="imagen">
+                            <div id="imagen-preview" class="imagen-preview">
+                                <img type="hidden" id="imagen-img" src="#" />
+                            </div>
+                            <label for="imagen">Suba sus imágenes aquí:</label>
+                            <input type="file" id="imagen" name="imagen" onchange="previewImage()" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-4">
+                        <!-- Precio de compra al proveedor -->
+                        <div>
+                            <label for="precComp">Precio de Compra<abbr title="required"
+                                    aria-label="required">*</abbr></label>
+                        </div>
+                        <div>
+                            <input type="number" required id="precComp" name="precComp" step="0.01"
+                                pattern="\d+(\.\d{2})?" title="Debe ser un número (puede incluir hasta 2 decimales)" />
+                        </div>
+
+                        <!-- Precio de venta al cliente "P.V.P" -->
+                        <div>
+                            <label for="precVenta">Precio de Venta<abbr title="required"
+                                    aria-label="required">*</abbr></label>
+                        </div>
+                        <div>
+                            <input type="number" required id="precVenta" name="precVenta" step="0.01"
+                                pattern="\d+(\.\d{2})?" title="Debe ser un número (puede incluir hasta 2 decimales)" />
+                        </div>
+
+                        <div>
+                            <label for="IVA">IVA <abbr title="required" aria-label="required">*</abbr>:</label>
+                        </div>
+                        <div>
+                            <input type="number" required id="IVA" name="IVA" step="0.01" pattern="\d+(\.\d{2})?"
+                                title="Debe ser un número (puede incluir hasta 2 decimales)" />
+                        </div>
+                        <div>
+                            <input type="text" hidden id="crsf" name="crsf" />
+                        </div>
+
+                        <div>
+                            <label for="desCom">Descripción Comercial:</label>
+                        </div>
+                        <div>
+                            <textarea id="desCom" name="desCom"></textarea>
+                        </div>
+
+                        <!-- Daños observados y especificación en caso de ser afirmativo -->
+                        <div>
+                            <label for="danoObs">Daños Observados:</label>
+                        </div>
+                        <div>
+                            <textarea id="danoObs" name="danoObs"></textarea>
+                        </div>
+
+                        <!-- Tipo de marchas que tiene el coche Automaticas / Manuales -->
+                        <div>
+                            <label for="tipMarcha">Tipo de Marcha:</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="tipMarcha-manual" name="tipMarcha" value="manual">
+                            <label for="tipMarcha-manual">Manual</label>
+                            <input type="radio" id="tipMarcha-automatico" name="tipMarcha" value="automatico">
+                            <label for="tipMarcha-automatico">Automático</label>
+                        </div>
+
+
+
+                        <!-- Agrega un campo oculto con el token CSRF en el formulario -->
+                        <div>
+                            <input type="hidden" id="csrf" name="csrf" value="" />
+                        </div>
+
+                    </div>
+                    <div class="col-12 button"><button type="submit" value="Enviar">Dar de alta</button></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
