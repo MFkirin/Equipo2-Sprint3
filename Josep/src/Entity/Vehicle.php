@@ -208,7 +208,6 @@ class Vehicle implements EntityInterface {
         $vehicle->setProviderId((int)$array["provider_id"]);
         $vehicle->setModelId((int)$array["model_id"]);
 
-
         return $vehicle;
     }
 

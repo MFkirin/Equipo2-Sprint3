@@ -5,7 +5,7 @@ require_once __DIR__ . '/src/Entity/Vehicle.php';
 require_once __DIR__ . '/src/Repository/VehicleRepository.php';
 require_once __DIR__ . '/src/Validator/VehicleValidator.php';
 
-$config = require_once __DIR__ . '/config/config.php';
+$config = require __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
 $vehicleRepository = new VehicleRepository($database->getConnection(), Vehicle::class);

@@ -53,6 +53,30 @@
         <label for="color">Color:</label>
         <input type="text" id="color" name="color" value="<?= $vehicleToUpdate->getColor(); ?>">
 
+        <label for="registration_date">Data de registre:</label>
+        <input type="date" id="registration_date" name="registration_date">
+
+        <label for="model">Model:</label>
+        <select id="model" name="model_id">
+            <?php foreach ($models as $model): ?>
+                <option value="<?= $model->getId() ?>"> <?= $model->getName() ?> </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="provider">Provider:</label>
+        <select id="provider" name="provider_id">
+            <?php foreach ($providers as $provider): ?>
+                <option value="<?= $provider->getId() ?>"> <?= $provider->getEmail() ?> </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="images">Imatges del vehicle:</label>
+        <div>
+            <?php foreach ($images as $image): ?>
+                <p> <?= $image->getFilename() ?> </p>
+            <?php endforeach; ?>
+        </div>
+
         <button type="submit">Actualizar</button>
     </form>
 
