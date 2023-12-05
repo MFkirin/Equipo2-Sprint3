@@ -1,0 +1,28 @@
+/* Fondo negro semitransparente */
+#confirmDeleteModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semitransparente */
+}
+
+.modal-dialog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Contenedor del modal blanco */
+.modal-content {
+    background-color: #fff; /* Fondo blanco del modal */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 1000;
+    width: 300px; /* Ancho del modal, ajusta según sea necesario */
+}

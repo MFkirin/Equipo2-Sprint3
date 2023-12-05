@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comanda</title>
+</head>
+<body>
+<h1>Order</h1>
+<div id="comanda">
+    <form id="formulari" action="comanda_form.php" method="post">
+        <div>
+            <label for="id">
+                <span>Order ID:</span>
+            </label>
+            <input type="number" id="id" name="id">
+        </div>
+
+        <div>
+            <label for="name">
+                <span>Name:</span>
+            </label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div>
+            <label for="surname">
+                <span>Surname:</span>
+            </label>
+            <input type="text" id="surname" name="surname">
+        </div>
+
+        <div>
+            <label for="num_vehicles">
+                <span>Number of Vehicles:</span>
+            </label>
+            <input type="number" id="num_vehicles" name="num_vehicles">
+        </div>
+
+        <div>
+            <label for="plate">
+                <span>Number Plate:</span>
+            </label>
+            <input type="text" id="plate" name="plate">
+        </div>
+
+        <div>
+            <label for="state">
+                <span>State:</span>
+            </label>
+            <select id="state" name="state">
+                <option value="pending">Waiting</option>
+                <option value="in_progress">In progress</option>
+                <option value="done">Done</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="invoice">
+                <span>Invoice:</span>
+            </label>
+            <input type="number" id="invoice" name="invoice">
+        </div>
+
+        <div>
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
