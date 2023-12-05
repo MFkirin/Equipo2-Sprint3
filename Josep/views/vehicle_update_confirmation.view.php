@@ -1,8 +1,27 @@
 <section>
-    <h2>Edición de vehículo</h2>
+    <h2>Edició de vehicle</h2>
 
-    <form action="/vehicle_update_process.php" method="post">
+    <form action="/vehicle_update_process.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= $vehicleToUpdate->getId(); ?>">
+
+        <div>
+            <label>Imatges disponibles del vehicle:</label>
+            <table>
+                <thead></thead>
+                <tbody>
+                <?php foreach ($imagesForVehicle as $image): ?>
+                    <tr>
+                        <td><?= $image->getFilename(); ?></td>
+                        <td><a href="/image_delete.php?id=<?= $image->getId(); ?>"
+                               class="operation-link delete-link">Eliminar</a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <label for="image">Noves imatges:</label>
+            <input type="file" id="image" name="image[]" multiple>
+        </div>
 
         <label for="plate">Plate:</label>
         <input type="text" id="plate" name="plate" value="<?= $vehicleToUpdate->getPlate(); ?>" required>
@@ -69,13 +88,6 @@
                 <option value="<?= $provider->getId() ?>"> <?= $provider->getEmail() ?> </option>
             <?php endforeach; ?>
         </select>
-
-        <label for="images">Imatges del vehicle:</label>
-        <div>
-            <?php foreach ($images as $image): ?>
-                <p> <?= $image->getFilename() ?> </p>
-            <?php endforeach; ?>
-        </div>
 
         <button type="submit">Actualizar</button>
     </form>

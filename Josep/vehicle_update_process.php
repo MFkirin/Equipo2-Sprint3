@@ -2,13 +2,16 @@
 require_once __DIR__ . '/src/Core/Database.php';
 require_once __DIR__ . '/src/Core/View.php';
 require_once __DIR__ . '/src/Entity/Vehicle.php';
+require_once __DIR__ . '/src/Entity/Image.php';
 require_once __DIR__ . '/src/Repository/VehicleRepository.php';
+require_once __DIR__ . '/src/Repository/ImageRepository.php';
 require_once __DIR__ . '/src/Validator/VehicleValidator.php';
 
 $config = require __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
 $vehicleRepository = new VehicleRepository($database->getConnection(), Vehicle::class);
+$imageRepository = new ImageRepository($database->getConnection(), Image::class);
 
 if (isset($_GET['error'])) {
     $errorMessage = $_GET['error'];
@@ -25,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($vehicleToUpdate !== null) {
 
             $errors = [];
-            //$validator = new VehicleValidator();
+            $uploadDirectory = 'assets/img/';
 
             $newVehicleArray = [
                 'id' => $idToUpdate,
@@ -48,11 +51,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
 
             $newVehicle = Vehicle::fromArray($newVehicleArray);
-            //$errors = $validator->validate($newVehicle);
 
             if (empty(array_filter($errors))) {
                 try {
                     $vehicleRepository->update($newVehicle);
+
+                    if (!empty($_FILES['image']['name'][0])) {
+                        foreach ($_FILES['image']['name'] as $key => $filename) {
+                            // Verificar errores de subida
+                            if ($_FILES['image']['error'][$key] !== UPLOAD_ERR_OK) {
+                                echo "Error al subir la imagen: {$_FILES['image']['error'][$key]}";
+                                exit;
+                            }
+
+                            $uploadFile = $uploadDirectory . basename($filename);
+
+                            $newImageArray = [
+                                "id" => 0,
+                                'filename' => $filename,
+                                "vehicle_id" => $idToUpdate,
+                            ];
+
+                            $newImage = Image::fromArray($newImageArray);
+                            $imageRepository->create($newImage);
+                            move_uploaded_file($_FILES['image']['tmp_name'][$key], $uploadFile);
+                        }
+                    }
 
                     header("Location: /vehicle_list.php");
                     exit;

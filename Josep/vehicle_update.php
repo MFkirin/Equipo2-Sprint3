@@ -35,13 +35,19 @@ $idToUpdate = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($idToUpdate !== false) {
     try {
         $vehicleToUpdate = $vehicleRepository->find($idToUpdate);
+        $imagesForVehicle = $imageRepository->findByVehicleId($idToUpdate);
     } catch (RecordNotFoundException $e) {
     }
 
     if ($vehicleToUpdate !== null) {
-        echo View::render('vehicle_update_confirmation', 'default', ["vehicleToUpdate" => $vehicleToUpdate, "models" => $models, "providers" => $providers, "images" => $images]);
+        echo View::render('vehicle_update_confirmation', 'default', [
+            "vehicleToUpdate" => $vehicleToUpdate,
+            "models" => $models,
+            "providers" => $providers,
+            "imagesForVehicle" => $imagesForVehicle,
+        ]);
     } else {
-        header("Location: /vehicle_list.php?error=Login no trobat");
+        header("Location: /vehicle_list.php?error=Vehicle no trobat");
         exit;
     }
 } else {
