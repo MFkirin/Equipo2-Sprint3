@@ -1,0 +1,12 @@
+html{
+    background-color: aliceblue;
+}
+
+table{
+    background-color: darkblue;
+    color: aliceblue;
+}
+
+.content{
+    padding: 50px;
+}

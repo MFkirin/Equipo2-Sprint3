@@ -1,0 +1,165 @@
+.imagen-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-preview img {
+    max-width: 50%;
+    max-height: 50%;
+    width: auto;
+    height: auto;
+}
+
+#imagen-label {
+    cursor: pointer;
+}
+
+#imagen-label input {
+    display: none;
+}
+
+#imagen-label::before {
+    content: 'Selecciona una imagen';
+    display: block;
+    background-color: #0073e6;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#imagen-label input[type="file"]:hover+#preview {
+    display: block;
+}
+
+
+.contenedor-flex {
+    margin-top: 20px;
+    margin-bottom: 20px ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.item {
+    flex: 0 0 calc(20%); /* Cuatro elementos por fila con espacio entre ellos */
+    box-sizing: border-box;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+
+
+#editar{
+    position: absolute;
+    top: 5px;
+    right: 2px;
+}
+
+#editar img{
+    width: 20px;
+    height: 100%;
+}
+#editar a:hover{
+    cursor:pointer ;
+}
+.item:hover {
+    transform: scale(1.05);
+}
+
+.item-top {
+    border-bottom: 2px solid #ddd;
+}
+
+.item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.item-bottom {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.item h3 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.item-text {
+    text-align: left;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.item-text span {
+    color: #555;
+}
+
+/* Improved CSS for Pager */
+.pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pager button {
+    background-color: rgb(170, 142, 49);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pager button:hover {
+    background-color: rgb(231, 211, 129);
+}
+
+.pager p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+
+
+@media (max-width: 480px) {
+    .item {
+        flex-basis: calc(50%); /* Dos elementos por fila en pantallas pequeñas */
+    }
+}
+
+/* Media query para mostrar el botón de hamburguesa en dispositivos móviles */
+@media (max-width: 802px) {
+    .buscador{
+        
+       display:flex;
+       align-items: center;
+        justify-content: center;
+
+    }
+    
+
+    .item {
+        flex-basis: calc(90%);
+        /* Un elemento por fila en pantallas pequeñas */
+    }
+
+    
+}
+

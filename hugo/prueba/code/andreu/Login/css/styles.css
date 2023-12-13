@@ -1,0 +1,59 @@
+html {
+    font-family: Arial, sans-serif;
+    background-color: #e7e7e9ff;
+    margin: 0;
+}
+
+.container {
+    width: 400px;
+    margin: 50px auto 0;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: white;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+input[type="text"]:valid, input[type="password"]:valid{
+    border-color: green;
+}
+
+input[type="text"]:invalid, input[type="password"]:invalid {
+    border-color: red;
+}
+
+input[type="submit"] {
+    background-color: #aa8e31ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #e7d381ff;
+}
+
+.error-message {
+    color: red;
+}
+
+a {
+    color: black;
+}

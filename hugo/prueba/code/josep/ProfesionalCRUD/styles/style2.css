@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    background-color: #e7e7e9ff;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-radius: 10px;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    font-size: 12px;
+}
+
+.info {
+    padding: 0px 10px 0px 10px;
+    border: 1px solid #e7e7e9ff;
+    border-radius: 5px;
+}
+
+.containerButtons div{
+    padding: 5px;
+}
+
+.modify {
+    padding: 10px;
+    background-color: #e7d381ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.modify:hover {
+    background-color: #aa8e31ff;
+}
+
+.delete {
+    padding: 10px;
+    background-color: #d37676;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.delete:hover {
+    background-color: #c24c4c;
+}
+
+.create {
+    margin: 20px 0px 0px 0px;
+    padding: 10px;
+    background-color: #89dc6a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.create:hover {
+    background-color: #51883d;
+}
