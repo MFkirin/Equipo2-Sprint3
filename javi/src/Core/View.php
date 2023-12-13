@@ -1,9 +1,12 @@
 <?php
+declare(strict_types=1);
+
+namespace App\Core;
 
 class View
 {
-    static public function render(string $view, string $layout = 'default', array $data = []): string {
-
+    static public function render(string $view, string $layout = 'default', array $data = []): string
+    {
         extract($data);
 
         ob_start();

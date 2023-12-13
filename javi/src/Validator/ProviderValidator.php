@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/../Core/ValidatorInterface.php';
+namespace App\Validator;
+use App\Core\ValidatorInterface;
+use App\Core\EntityInterface;
 
 class ProviderValidator implements ValidatorInterface
 {
@@ -48,29 +50,29 @@ class ProviderValidator implements ValidatorInterface
 
         /**
         if (!preg_match($addressPattern, $address)) {
-            $errores[] = 'Adreça incorrecta';
+        $errores[] = 'Adreça incorrecta';
         }
          */
 
-          /**
+        /**
         if (!preg_match($bankTitlePattern, $bankTitle)) {
-            $errores[] = 'Títol del banc incorrecte';
+        $errores[] = 'Títol del banc incorrecte';
         }
-        */
+         */
         if (!preg_match($managerNIFPattern, $managerNIF)) {
             $errores[] = 'NIF del gerent incorrecte';
         }
 
-          /**
+        /**
         if (!preg_match($LOPDdocPattern, $LOPDdoc)) {
-            $errores[] = 'Document LOPD incorrecte';
+        $errores[] = 'Document LOPD incorrecte';
         }
-        */
-            /**
+         */
+        /**
         if (!preg_match($constitutionArticlePattern, $constitutionArticle)) {
-            $errores[] = 'Article de la constitució incorrecte';
+        $errores[] = 'Article de la constitució incorrecte';
         }
-             */
+         */
 
         return $errores;
     }

@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Core;
+
+use PDO;
+
 /**
  *
  */
@@ -9,7 +13,9 @@ abstract class Repository
 
     protected PDO $pdo;
     protected string $entityClassName;
-    public function __construct(PDO $pdo, string $entityClassName) {
+
+    public function __construct(PDO $pdo, string $entityClassName)
+    {
         $this->pdo = $pdo;
         $this->entityClassName = $entityClassName;
     }
@@ -42,6 +48,4 @@ abstract class Repository
      * @return void
      */
     abstract public function update(EntityInterface $entity): void;
-
-
 }

@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/state-diagram
+scale 350 width
+
+[*] --> InStock
+InStock --> PreInvoiced : Booking
+PreInvoiced --> Confirmed: Generating bill
+Confirmed --> Invoiced: Paying
+Invoiced --> Sold : Generating paying confirmation
+Sold --> [*]
+@enduml

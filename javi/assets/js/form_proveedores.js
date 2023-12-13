@@ -45,15 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
   provider.cif.addEventListener("blur", validarCIF);
   provider.nif.addEventListener("blur", validarNIFGerente);
 
-  // Botón borrar contenido formulario 
   document.getElementById("delete").addEventListener("click", function () {
-    // Vacía el contenido de los inputs
-    provider.address.value = "";
-    provider.dni.value = "";
-    provider.phone.value = "";
-    provider.email.value = "";
-    provider.cif.value = "";
-    provider.nif.value = "";
     // Elimina el objeto para que no se vuelvan a llenar los inputs
     localStorage.removeItem("formData");
   });
@@ -242,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Llenar los campos del formulario con los datos cargados
       provider.address.value = formData.domicilio;
-      provider.dni.value = formData.DNI;
       provider.dni.value = formData.DNI;
       provider.phone.value = formData.tel;
       provider.email.value = formData.email;

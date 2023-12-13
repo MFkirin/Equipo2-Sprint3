@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../Core/EntityInterface.php';
+namespace App\Entity;
+use App\Core\EntityInterface;
 
 class Provider implements EntityInterface
 {
@@ -147,10 +148,10 @@ class Provider implements EntityInterface
             "dni" => $entity->getDni(),
             "cif" => $entity->getCif(),
             "address" => $entity->getAddress(),
-            "bankTitle" => $entity->getBankTitle(),
-            "managerNif" => $entity->getManagerNif(),
-            "LOPDdoc" => $entity->getLOPDdoc(),
-            "constitutionArticle" => $entity->getConstitutionArticle()
+            "bank_title" => $entity->getBankTitle(),
+            "manager_nif" => $entity->getManagerNif(),
+            "lopd_doc" => $entity->getLOPDdoc(),
+            "constitution_article" => $entity->getConstitutionArticle()
         ];
     }
 }

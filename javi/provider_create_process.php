@@ -1,13 +1,20 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+$config = require __DIR__ . '/config/config.php';
+
+use App\Core\Database;
+use App\Core\Security;
+use App\Core\View;
+use App\Entity\Provider;
+use App\Repository\ProviderRepository;
+use App\Validator\ProviderValidator;
+
 session_start();
 
-require __DIR__ . '/src/Core/Database.php';
-require __DIR__ . '/src/Core/View.php';
-require __DIR__ . '/src/Entity/Provider.php';
-require __DIR__ . '/src/Repository/ProviderRepository.php';
-require __DIR__ . '/src/Validator/ProviderValidator.php';
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
 
-$config = require __DIR__ . '/config/config.php';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -20,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if (empty($errores) && hash_equals($_SESSION["token"], $token)) {
     */
     try {
-        $token = $_POST["csrf_token"];
         $email = $_POST['email'] ?? "";
         $phone = $_POST['phone'] ?? "";
         $dni = $_POST['dni'] ?? "";
@@ -59,4 +65,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $errors[] = 'No se recibieron datos del formulario';
 }
 
-echo View::render('provider_create_process', 'default', ["errors" => $errors]);
+echo View::render('provider_create_process', 'backoffice', ["errors" => $errors]);

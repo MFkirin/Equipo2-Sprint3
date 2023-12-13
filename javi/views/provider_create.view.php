@@ -1,13 +1,6 @@
 
-<?php
-session_start();
-$token = bin2hex(random_bytes(24));
-$_SESSION["token"] = $token;
-?>
     <h1>Proveedor</h1>
     <form action="provider_create_process.php" id="form-control" method="post">
-
-        <input type="hidden" id="token" name="csrf_token" value="<?= $token ?>">
 
         <div class="form-group">
             <label for="email">Correo Electrónico:</label>
@@ -51,7 +44,7 @@ $_SESSION["token"] = $token;
         <!-- Titulo del banco -->
         <div class="form-group">
             <label for="bankTitle">Título del Banco:</label>
-            <input type="text" name="bankTitle" id="bankTitle" placeholder="Nombre del Banco" required>
+            <input type="file" class="docBrowser" name="bankTitle" id="bankTitle" placeholder="Nombre del Banco" required>
             <div id="ErrorBankTitle">
                 <p></p>
             </div>
@@ -67,7 +60,7 @@ $_SESSION["token"] = $token;
         <!-- Documento LOPD -->
         <div class="form-group">
             <label for="LOPDdoc">Documento LOPD:</label>
-            <input type="text" name="LOPDdoc" id="LOPDdoc" placeholder="" required>
+            <input type="file" class="docBrowser" name="LOPDdoc" id="LOPDdoc" placeholder="" required>
             <div id="ErrorLOPDdoc">
                 <p></p>
             </div>
@@ -75,7 +68,7 @@ $_SESSION["token"] = $token;
         <!-- Articulo de la constitución -->
         <div class="form-group">
             <label for="constitutionArticle">Artículo de la constitución:</label>
-            <input type="text" name="constitutionArticle" id="constitutionArticle" placeholder="" required>
+            <input type="file" name="constitutionArticle" id="constitutionArticle" placeholder="" required>
             <div id="ErrorConstitutionArticle">
                 <p></p>
             </div>

@@ -1,10 +1,16 @@
 <?php
-require __DIR__ . '/src/Core/Database.php';
-require __DIR__ . '/src/Core/View.php';
-require __DIR__ . '/src/Entity/Provider.php';
-require __DIR__ . '/src/Repository/ProviderRepository.php';
 
+require_once __DIR__ . '/vendor/autoload.php';
 
-echo View::render('provider_create', 'default');
+use App\Core\Security;
+use App\Core\View;
+
+session_start();
+
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
+
+echo View::render('provider_create', 'backoffice');
 
 

@@ -1,0 +1,139 @@
+@startuml
+
+class Vehicle {
+- id : int
+- plate : string
+- observedDamages : string
+- kilometers : int
+- buyPrice : float
+- sellPrice : float
+- fuel : string
+- IVA : float
+- description : string
+- chassisNumber : string
+- gearbox : string
+- images[] : Image
+- isNew : bool
+- transportIncluded : bool
+- color : string
+- registrationDate : Date
+- documents[] : Document
+- provider : Provider
+- model : Model
+- status: string
+}
+
+class Provider {
+- id : int
+- email : string
+- phone : string
+- dni : string
+- cif : string
+- address : string
+- bankTitle : string
+- managerNIF : string
+- LOPDdoc : string
+- constitutionArticle : string
+}
+
+class Document {
+- id : int
+- type : strting
+- path : string
+}
+
+class Image {
+- id : int
+- filename : string
+}
+
+class Model {
+- id : int
+- name : string
+- enginePower : string
+- description : string
+- brand : Brand
+- year : int
+}
+
+class Order {
+- id : int
+- vehicles[] : Vehicle
+- state : string
+- costumer : Costumer
+}
+
+class Professional {
+- id : int
+- CIF : string
+- managerNIF : string
+- LOPD : string
+- bussinessName : string
+- constitutionWritring : string
+- subscription : bool
+}
+
+class Private {}
+
+class Invoice {
+- id : int
+- number : string
+- price : float
+- date : Date
+- costumer : Costumer
+- order : Order
+}
+
+class Employee {
+- id : int
+- name : string
+- lastname : string
+- type : string
+- login : Login
+}
+
+class Login {
+- id : int
+- username : string
+- password : string
+- role : string
+}
+
+class Administrador {}
+
+class Administrative {}
+
+class Brand {
+- id : int
+- name : string
+}
+
+class Customer {
+- id : int
+- name : string
+- lastname : string
+- address : string
+- dni : string
+- phone : string
+- email : string
+- login : Login
+}
+
+Provider  "1" -- "*" Vehicle
+Document "1"  --  "*" Vehicle
+Image "1" -- "*" Vehicle
+Model "1" -- "1" Vehicle
+Model "*" -- "1" Brand
+Login "1" -- "1" Employee
+Order "1" -- "*" Vehicle
+
+Customer  <|--  Private
+Customer  <|--  Professional
+Customer "1" -- "1" Login
+Invoice "1" -- "*" Customer
+Invoice "1" --  "1" Order
+Administrador  --|>  Employee
+Administrative  --|>  Employee
+
+@enduml
+

@@ -1,7 +1,12 @@
 <?php
 
-require __DIR__ . '/../Core/Repository.php';
+namespace App\Repository;
 
+use App\Core\Repository;
+use App\Core\EntityInterface;
+use App\Entity\Provider;
+use Exception;
+use PDO;
 
 class ProviderRepository extends Repository
 {
@@ -14,17 +19,16 @@ class ProviderRepository extends Repository
         try {
             $pdoStatement = $this->pdo->prepare("SELECT * FROM provider WHERE id = :id");
             $pdoStatement->setFetchMode(PDO::FETCH_ASSOC);
-            $pdoStatement->bindValue(':id',$id);
+            $pdoStatement->bindValue(':id', $id);
             $pdoStatement->execute();
             // TODO: Implement find() method.
             // TODO: Implement FetchMode in PDO object
             $row = $pdoStatement->fetch(PDO::FETCH_ASSOC);
-            if($row){
+            if ($row) {
                 $provider = Provider::fromArray($row);
                 return $provider;
             }
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
         throw new Exception("Provider not found");
@@ -60,7 +64,7 @@ class ProviderRepository extends Repository
     {
         // TODO: Implement create() method.
         try {
-            $pdoStatement = $this->pdo->prepare("INSERT INTO provider (email,phone,dni,cif,address,bank_title,manager_nif,LOPD_doc,constitution_article) VALUES (:email,:phone,:dni,:cif,:address,:bankTitle,:managerNIF,:LOPDdoc,:constitutionArticle)");
+            $pdoStatement = $this->pdo->prepare("INSERT INTO provider (email,phone,dni,cif,address,bank_title,manager_nif,lopd_doc,constitution_article) VALUES (:email,:phone,:dni,:cif,:address,:bankTitle,:managerNIF,:LOPDdoc,:constitutionArticle)");
             $pdoStatement->bindValue(':email', $entity->getEmail());
             $pdoStatement->bindValue(':phone', $entity->getPhone());
             $pdoStatement->bindValue(':dni', $entity->getDni());
@@ -74,7 +78,7 @@ class ProviderRepository extends Repository
             if (!$ok)
                 throw new Exception("No s'ha pogut executar al consulta");
         } catch (Exception $e) {
-            throw new Exception("Error");
+            echo $e->getMessage();
         }
     }
 
@@ -91,7 +95,7 @@ class ProviderRepository extends Repository
             if (!$ok)
                 throw new Exception("No s'ha pogut executar al consulta");
         } catch (Exception $e) {
-            throw new Exception("Error");
+            echo $e->getMessage();
         }
     }
 
@@ -102,7 +106,9 @@ class ProviderRepository extends Repository
     {
         // TODO: Implement update() method.
         try {
-            $pdoStatement = $this->pdo->prepare("UPDATE provider SET email = :email, phone = :phone, dni = :dni, cif = :cif, address = :address, bank_title = :bankTitle, manager_nif = :managerNIF, LOPD_doc = :LOPDdoc, constitution_article = :constitutionArticle WHERE id = :id");
+            $pdoStatement = $this->pdo->prepare("UPDATE provider SET email = :email, phone = :phone,
+                    dni = :dni, cif = :cif, address = :address, bank_title = :bankTitle, manager_nif = :managerNIF,
+                    LOPD_doc = :LOPDdoc, constitution_article = :constitutionArticle WHERE id = :id");
             $pdoStatement->bindValue(':email', $entity->getEmail());
             $pdoStatement->bindValue(':phone', $entity->getPhone());
             $pdoStatement->bindValue(':dni', $entity->getDni());
