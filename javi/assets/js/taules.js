@@ -7,7 +7,7 @@ let icon =  document.getElementById('close-selection');
 
 function main() {
 
-    bttn.addEventListener('click', function () {
+    /**bttn.addEventListener('click', function () {
         icon.style.display = 'inline';
         for (let i = 0; i < tds.length; i++) {
             tds[i].style.display = 'block';
@@ -25,21 +25,71 @@ function main() {
                 checkboxes[j].checked = false;
             }
         }
+    });*/
+    bttn.addEventListener('click', function () {
+        showElements().then(() => {
+            console.log('Elements shown successfully.');
+        }).catch((error) => {
+            console.error('Error showing elements:', error);
+        });
     });
+
+    icon.addEventListener('click', function () {
+        hideElements().then(() => {
+            console.log('Elements hidden successfully.');
+        }).catch((error) => {
+            console.error('Error hiding elements:', error);
+        });
+    });
+
     $('.delete').on('click', function () {
         let tr = this.closest('tr'); // Encuentra el elemento tr más cercano al botón pulsado
         let providerId = $(tr).find('td:eq(1)').text(); // Obtiene el contenido del segundo td dentro del tr
         let datastring = 'id=' + providerId;
         loadContent('/provider_delete.php?', datastring, providerId, tr);
     });
+    $('.details').on('click', function () {
+        let tr = this.closest('tr'); // Encuentra el elemento tr más cercano al botón pulsado
+        let providerId = $(tr).find('td:eq(1)').text(); // Obtiene el contenido del segundo td dentro del tr
+        let datastring = 'id=' + providerId;
+        loadContent('/provider_detail.php?', datastring, providerId, tr);
+    });
+
 }
+
+function showElements() {
+    return new Promise((resolve) => {
+        icon.style.display = 'inline';
+        for (let i = 0; i < tds.length; i++) {
+            tds[i].style.display = 'block';
+            for (let j = i; j < checkboxes.length; j++) {
+                checkboxes[j].checked = true;
+            }
+        }
+        resolve();
+    });
+}
+
+function hideElements() {
+    return new Promise((resolve) => {
+        icon.style.display = 'none';
+        for (let i = 0; i < tds.length; i++) {
+            tds[i].style.display = 'none';
+            for (let j = i; j < checkboxes.length; j++) {
+                checkboxes[j].checked = false;
+            }
+        }
+        resolve();
+    });
+}
+
     function loadContent(url, datastring, id, tr) {
         $.ajax({
             type: "GET",
             url: url + datastring,
             success: function (response) {
                 modalStyles(document.querySelector('.modal'), document.querySelector('.modal-content'));
-                var fragment = $(response).find('.modal-delete');
+                var fragment = $(response).find('.modal-opener');
                 $('.modal-content').html(fragment);
                 $('.confirmDel').click(function (event) {
                     deleteProvider(datastring, id, tr);
@@ -48,6 +98,10 @@ function main() {
                 $('.cancelDel').click(function (event) {
                     document.querySelector('.modal').style.display = 'none';
                 })
+                $('#close-modal').on('click',function (){
+                    $('.modal').hide();
+                });
+
             }
         })
     }

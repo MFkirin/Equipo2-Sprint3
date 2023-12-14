@@ -264,6 +264,17 @@ i{
     display: none;
 }
 
+#close-modal{
+    color: black;
+    position: absolute;
+    top: .5em;
+    left: 98%;
+}
+
+#close-modal:hover{
+    color: rgba(0,0,0,0.7);
+}
+
 input[name="multiple-selector"]{
     appearance: none;
     -webkit-appearance: none;
@@ -300,6 +311,7 @@ input[name="multiple-selector"]:checked{
 }
 
 .modal{
+    display: none;
     position: fixed;
     background-color: rgba(0,0,0,0.8);
     height: 100%;
@@ -366,6 +378,8 @@ input[name="multiple-selector"]:checked{
     background-color: #e7d381;
     border-radius: .5em;
 }
+
+
 
 @media only screen and (max-width: 1700px){
     .detail{

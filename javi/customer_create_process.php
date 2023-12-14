@@ -1,13 +1,15 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . '/src/Core/Database.php';
-require_once __DIR__ . '/src/Core/View.php';
-require_once __DIR__ . '/src/Entity/Customer.php';
-require_once __DIR__ . '/src/Repository/CustomerRepository.php';
-require_once __DIR__ . '/src/Validator/CustomerValidator.php';
-require_once __DIR__ . '/src/Entity/Login.php';
-require_once __DIR__ . '/src/Repository/LoginRepository.php';
-require_once __DIR__ . '/src/Validator/LoginValidator.php';
+use App\Core\Database;
+use App\Entity\Customer;
+use App\Entity\Login;
+use App\Repository\CustomerRepository;
+use App\Repository\LoginRepository;
+use App\Validator\CustomerValidator;
+use App\Validator\LoginValidator;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $config = require __DIR__ . '/config/config.php';
 
@@ -52,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $newLogin = Login::fromArray($newLoginArray);
-    $loginValidator = new LoginValidator();
+    $loginValidator = new LoginValidator($newLoginArray);
     $errorsLogin = $loginValidator->validate($newLogin);
 
-    $errors = array_merge($errors, $errorsLogin);    $errors = [];
+    $errors = array_merge($errors, $errorsLogin);
 
 
     if (empty($errors)) {

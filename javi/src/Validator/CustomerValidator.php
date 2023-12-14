@@ -3,19 +3,23 @@
 namespace App\Validator;
 
 // TODO: Una classe no hauria de dependre d'un fitxer de configuració cal usar una injecció de dependències
-$roles = require __DIR__ . "/../../config/config.php";
+use App\Core\EntityInterface;
+use App\Core\ValidatorInterface;
 
-class CustomerValidator implements \ValidatorInterface
+class CustomerValidator implements ValidatorInterface
 {
+
+
     /**
      * Valida les dades de l'entitat 'Customer'.
      *
      * @param EntityInterface $entity L'entitat 'Login' a validar.
      * @return array Un array amb els missatges d'error trobats durant la validació.
      */
+
     public function validate(EntityInterface $entity): array
     {
-        global $roles;
+
         $errors = [];
 
         $id = $entity->getId();

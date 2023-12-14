@@ -3,6 +3,14 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Core\EntityInterface;
+use App\Core\Repository;
+use App\Entity\Login;
+use App\Exception\RecordNotFoundException;
+use PDO;
+use PDOException;
+use RuntimeException;
+
 /**
  * La classe EmployeeRepository gestiona les operacions de persistència per a l'entitat Employee.
  */

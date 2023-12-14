@@ -16,6 +16,8 @@ $config = require_once __DIR__ . '/config/config.php';
 $database = new Database($config["database"]);
 $loginRepository = new LoginRepository($database->getConnection(), Login::class);
 
+$message = FlashMessage::get('message');
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $username = $_POST['username'] ?? "";
     $password = $_POST['password'] ?? "";
@@ -31,4 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
-echo View::render('login');
+echo View::render(view: 'login', data: ["message"=>$message]);

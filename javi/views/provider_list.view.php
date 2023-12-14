@@ -64,7 +64,9 @@
                 <tbody>
                 <?php foreach ($providers as $provider): ?>
                     <tr>
-                        <td class="multiple-selector"><input type="checkbox" name="multiple-selector"></i></td>
+                        <td class="multiple-selector">
+                            <input type="checkbox" name="multiple-selector">
+                        </td>
                         <td data-title="Id:"><?= $provider->getId() ?></td>
                         <td data-title="Correu Electrònic:"><?= $provider->getEmail() ?></td>
                         <td data-title="Telèfon:"><?= $provider->getPhone() ?></td>

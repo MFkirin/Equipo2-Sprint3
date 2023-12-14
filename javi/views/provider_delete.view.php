@@ -1,4 +1,4 @@
-<div class="modal-delete">
+<div class="modal-opener">
     <p>Estas segur d'elimimnar aquest proveïdor?</p>
     <div id="div-table">
         <table class="backoffice-table">

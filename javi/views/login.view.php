@@ -1,11 +1,11 @@
 <section>
     <h2>Inicio de sesión</h2>
-    <?php use App\Helper\FlashMessage;
 
-    if (isset($_SESSION["flash-message"]["message"])) {
-        echo '<p class="message">' . $_SESSION["flash-message"]["message"] . '</p>';
-        FlashMessage::unset("message");
-    }; ?>
+
+    <?php  if (!empty($message)) :?>
+        <p class="message"><?=$message?></p>
+    <?php endif; ?>
+
     <form action="/login.php" method="post" novalidate>
 
         <label for="username">Nombre de usuario:</label>

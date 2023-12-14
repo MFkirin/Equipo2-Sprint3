@@ -33,4 +33,5 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install zip
 
-#docker-compose exec web-server composer install
+# docker-compose exec web-server composer install \
+# docker-compose exec web-server /bin/bash

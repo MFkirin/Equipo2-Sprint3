@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Core\EntityInterface;
 use App\Core\Repository;
+use App\Core\EntityInterface;
 use App\Entity\Customer;
 use App\Helper\FlashMessage;
 use PDO;

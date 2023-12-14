@@ -47,7 +47,7 @@ class LoginValidator implements ValidatorInterface
             $errors[] = 'La contrasenya ha de tenir almenys 8 caràcters i incloure lletres i números.';
         }
 
-        if (!in_array($role, $this->roles['roles'])) {
+        if (!in_array($role, $this->roles)) {
             $errors[] = 'Rol no vàlid.';
         }
 

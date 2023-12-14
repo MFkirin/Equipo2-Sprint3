@@ -15,9 +15,11 @@ $token = Security::getToken();
 Security::isToken($token);
 Security::isRoleAdministrator($token);
 
+$id = $_GET['id'];
+
 $database = new Database($config["database"]);
 
 $providerRepository = new ProviderRepository($database->getConnection(), Provider::class);
-$providers = $providerRepository->findAll();
+$provider = $providerRepository->find($id);
 
-echo View::render('provider_list', 'backoffice', ["providers"=>$providers]);
+echo View::render('provider_detail', 'backoffice', ["provider"=>$provider]);

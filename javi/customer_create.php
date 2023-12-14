@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
-require __DIR__ . '/src/Core/Database.php';
-require __DIR__ . '/src/Core/View.php';
-require __DIR__ . '/src/Entity/Customer.php';
-require __DIR__ . '/src/Repository/CustomerRepository.php';
+use App\Core\Database;
+use App\Core\View;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $config = require __DIR__ . '/config/config.php';
 

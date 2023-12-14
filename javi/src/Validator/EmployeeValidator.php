@@ -1,7 +1,10 @@
 <?php
+namespace App\Validator;
+use App\Core\ValidatorInterface;
+use App\Core\EntityInterface;
 
 require_once __DIR__ . "/../Core/ValidatorInterface.php";
-class EmployeeValidator implements \ValidatorInterface
+class EmployeeValidator implements ValidatorInterface
 {
 
     private array $validRoles;

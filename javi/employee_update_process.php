@@ -1,9 +1,11 @@
 <?php
-require __DIR__ . '/src/Core/Database.php';
-require __DIR__ . '/src/Core/View.php';
-require __DIR__ . '/src/Entity/Employee.php';
-require __DIR__ . '/src/Repository/EmployeeRepository.php';
-require __DIR__ . '/src/Validator/EmployeeValidator.php';
+declare(strict_types=1);
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Core\Database;
+use App\Entity\Employee;
+use App\Repository\EmployeeRepository;
+use App\Validator\EmployeeValidator;
 
 $config = require __DIR__ . '/config/config.php';
 

@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace App\Entity;
+use App\Core\EntityInterface;
+
 class Employee implements EntityInterface
 {
     private int $id;
@@ -9,6 +11,17 @@ class Employee implements EntityInterface
     private string $lastname;
     private string $type;
     private Login $login;
+    private int $login_id;
+
+    public function getLoginId(): int
+    {
+        return $this->login_id;
+    }
+
+    public function setLoginId(int $login_id): void
+    {
+        $this->login_id = $login_id;
+    }
 
     public function getId(): int
     {
@@ -67,6 +80,7 @@ class Employee implements EntityInterface
         $employee->setName($array["name"]);
         $employee->setLastname($array["lastname"]);
         $employee->setType($array["type"]);
+        $employee->setLoginId($array["login_id"]);
         return $employee;
     }
 
@@ -76,7 +90,8 @@ class Employee implements EntityInterface
             "id" => $entity->getId(),
             "name" => $entity->getName(),
             "lastname" => $entity->getLastName(),
-            "type" => $entity->getType()
+            "type" => $entity->getType(),
+            "login_id" => $entity->getLoginId()
         ];
     }
 }
