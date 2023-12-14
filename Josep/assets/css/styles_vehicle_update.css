@@ -1,0 +1,33 @@
+.vehicle_update .form-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.vehicle_update h2 {
+    padding: 20px;
+}
+
+.vehicle_update .form-column {
+    flex: 1;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.vehicle_update .form-column label, .form-column input, .form-column textarea, .form-column select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.vehicle_update .submit-button {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+}
+
+.vehicle_update .cancel-button{
+    margin-bottom: 10px;
+}

@@ -1,8 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
-require_once __DIR__. '/../Core/EntityInterface.php';
+namespace App\Entity;
+use App\Core\EntityInterface;
 
 class Login implements EntityInterface
 {

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-require_once __DIR__. '/../Core/EntityInterface.php';
+namespace App\Entity;
+use App\Core\EntityInterface;
+use DateTime;
 
 class Vehicle implements EntityInterface {
     private int $id;
@@ -15,7 +17,7 @@ class Vehicle implements EntityInterface {
     private float $IVA;
     private string $description;
     private string $chassisNumber;
-    private string $gearShift;
+    private string $gearbox;
     private array $images = [];
     private bool $isNew;
     private bool $transportIncluded;
@@ -24,171 +26,211 @@ class Vehicle implements EntityInterface {
     private Provider $provider;
     private Model $model;
     private int $providerId;
+    private int $modelId;
 
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
-    public function getPlate(): string {
+    public function getPlate(): string
+    {
         return $this->plate;
     }
 
-    public function setPlate(string $plate): void {
+    public function setPlate(string $plate): void
+    {
         $this->plate = $plate;
     }
 
-    public function getObservedDamages(): string {
+    public function getObservedDamages(): string
+    {
         return $this->observedDamages;
     }
 
-    public function setObservedDamages(string $observedDamages): void {
+    public function setObservedDamages(string $observedDamages): void
+    {
         $this->observedDamages = $observedDamages;
     }
 
-    public function getKilometers(): int {
+    public function getKilometers(): int
+    {
         return $this->kilometers;
     }
 
-    public function setKilometers(int $kilometers): void {
+    public function setKilometers(int $kilometers): void
+    {
         $this->kilometers = $kilometers;
     }
 
-    public function getBuyPrice(): float {
+    public function getBuyPrice(): float
+    {
         return $this->buyPrice;
     }
 
-    public function setBuyPrice(float $buyPrice): void {
+    public function setBuyPrice(float $buyPrice): void
+    {
         $this->buyPrice = $buyPrice;
     }
 
-    public function getSellPrice(): float {
+    public function getSellPrice(): float
+    {
         return $this->sellPrice;
     }
 
-    public function setSellPrice(float $sellPrice): void {
+    public function setSellPrice(float $sellPrice): void
+    {
         $this->sellPrice = $sellPrice;
     }
 
-    public function getFuel(): string {
+    public function getFuel(): string
+    {
         return $this->fuel;
     }
 
-    public function setFuel(string $fuel): void {
+    public function setFuel(string $fuel): void
+    {
         $this->fuel = $fuel;
     }
 
-    public function getIVA(): float {
+    public function getIVA(): float
+    {
         return $this->IVA;
     }
 
-    public function setIVA(float $IVA): void {
+    public function setIVA(float $IVA): void
+    {
         $this->IVA = $IVA;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-    public function setDescription(string $description): void {
+    public function setDescription(string $description): void
+    {
         $this->description = $description;
     }
 
-    public function getChassisNumber(): string {
+    public function getChassisNumber(): string
+    {
         return $this->chassisNumber;
     }
 
-    public function setChassisNumber(string $chassisNumber): void {
+    public function setChassisNumber(string $chassisNumber): void
+    {
         $this->chassisNumber = $chassisNumber;
     }
 
-    public function getGearShift(): string {
-        return $this->gearShift;
+    public function getGearbox(): string
+    {
+        return $this->gearbox;
     }
 
-    public function setGearShift(string $gearShift): void {
-        $this->gearShift = $gearShift;
+    public function setGearbox(string $gearbox): void
+    {
+        $this->gearbox = $gearbox;
     }
 
-    public function getImages(): array {
+    public function getImages(): array
+    {
         return $this->images;
     }
 
-    public function setImages(array $images): void {
+    public function setImages(array $images): void
+    {
         $this->images = $images;
     }
 
-    public function isNew(): bool {
+    public function isNew(): bool
+    {
         return $this->isNew;
     }
 
-    public function setIsNew(bool $isNew): void {
+    public function setIsNew(bool $isNew): void
+    {
         $this->isNew = $isNew;
     }
 
-    public function isTransportIncluded(): bool {
+    public function isTransportIncluded(): bool
+    {
         return $this->transportIncluded;
     }
 
-    public function setTransportIncluded(bool $transportIncluded): void {
+    public function setTransportIncluded(bool $transportIncluded): void
+    {
         $this->transportIncluded = $transportIncluded;
     }
 
-    public function getColor(): string {
+    public function getColor(): string
+    {
         return $this->color;
     }
 
-    public function setColor(string $color): void {
+    public function setColor(string $color): void
+    {
         $this->color = $color;
     }
 
-    public function getRegistrationDate(): DateTime {
+    public function getRegistrationDate(): DateTime
+    {
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate(DateTime $registrationDate): void {
+    public function setRegistrationDate(DateTime $registrationDate): void
+    {
         $this->registrationDate = $registrationDate;
     }
 
-    public function getProvider(): Provider {
+    public function getProvider(): Provider
+    {
         return $this->provider;
     }
 
-    public function setProvider(Provider $provider): void {
+    public function setProvider(Provider $provider): void
+    {
         $this->provider = $provider;
     }
 
-    public function getModel(): Model {
+    public function getModel(): Model
+    {
         return $this->model;
     }
 
-    public function setModel(Model $model): void {
+    public function setModel(Model $model): void
+    {
         $this->model = $model;
     }
 
-    public function getProviderId(): int {
+    public function getProviderId(): int
+    {
         return $this->providerId;
     }
 
-    public function setProviderId(int $providerId): void {
+    public function setProviderId(int $providerId): void
+    {
         $this->providerId = $providerId;
     }
 
-    public function getModelId(): int {
+    public function getModelId(): int
+    {
         return $this->modelId;
     }
 
-    public function setModelId(int $modelId): void {
+    public function setModelId(int $modelId): void
+    {
         $this->modelId = $modelId;
     }
 
-    private int $modelId;
-
-    public static function fromArray(array $array): EntityInterface {
+    public static function fromArray(array $array): EntityInterface
+    {
         $vehicle = new Vehicle();
         $vehicle->setId($array["id"]);
         $vehicle->setPlate($array["plate"]);
@@ -200,7 +242,7 @@ class Vehicle implements EntityInterface {
         $vehicle->setIVA($array["iva"]);
         $vehicle->setDescription($array["description"]);
         $vehicle->setChassisNumber($array["chassis_number"]);
-        $vehicle->setGearShift($array["gear_shift"]);
+        $vehicle->setGearbox($array["gearbox"]);
         $vehicle->setIsNew((bool)$array["is_new"]);
         $vehicle->setTransportIncluded((bool)$array["transport_included"]);
         $vehicle->setColor($array["color"]);
@@ -208,10 +250,12 @@ class Vehicle implements EntityInterface {
         $vehicle->setProviderId((int)$array["provider_id"]);
         $vehicle->setModelId((int)$array["model_id"]);
 
+
         return $vehicle;
     }
 
-    public static function toArray(EntityInterface $entity): array {
+    public static function toArray(EntityInterface $entity): array
+    {
         return [
             "id" => $entity->getId(),
             "plate" => $entity->getPlate(),
@@ -223,7 +267,7 @@ class Vehicle implements EntityInterface {
             "iva" => $entity->getIVA(),
             "description" => $entity->getDescription(),
             "chassis_number" => $entity->getChassisNumber(),
-            "gear_shift" => $entity->getGearShift(),
+            "gearbox" => $entity->getGearbox(),
             "is_new" => $entity->isNew(),
             "transport_included" => $entity->isTransportIncluded(),
             "color" => $entity->getColor(),

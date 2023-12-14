@@ -1,4 +1,5 @@
 <?php
+namespace App\Core;
 
 class View
 {
@@ -7,12 +8,12 @@ class View
         extract($data);
 
         ob_start();
-        require_once __DIR__. "/../../views/{$view}.view.php";
+        require __DIR__ . "/../../views/{$view}.view.php";
         $content = ob_get_clean();
 
 
         ob_start();
-        require_once __DIR__. "/../../views/layouts/{$layout}.layout.php";
+        require __DIR__ . "/../../views/layouts/{$layout}.layout.php";
         // Retorna el contingut del buffer i desactiva el buffering
         $content = ob_get_clean();
 

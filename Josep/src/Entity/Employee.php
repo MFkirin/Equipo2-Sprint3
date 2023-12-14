@@ -1,9 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-require_once __DIR__. '/../Core/EntityInterface.php';
-
+namespace App\Entity;
 class Employee implements EntityInterface
 {
     private int $id;
@@ -64,7 +62,6 @@ class Employee implements EntityInterface
 
     public static function fromArray(array $array): EntityInterface
     {
-        // TODO: Implement fromArray() method.
         $employee = new Employee();
         $employee->setId($array["id"]);
         $employee->setName($array["name"]);
@@ -75,7 +72,6 @@ class Employee implements EntityInterface
 
     public static function toArray(EntityInterface $entity): array
     {
-        // TODO: Implement toArray() method.
         return [
             "id" => $entity->getId(),
             "name" => $entity->getName(),

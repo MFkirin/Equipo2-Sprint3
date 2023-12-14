@@ -1,19 +1,22 @@
 <?php
-require_once __DIR__. '/src/Core/Database.php';
-require_once __DIR__. '/src/Core/View.php';
-require_once __DIR__. '/src/Entity/Model.php';
-require_once __DIR__. '/src/Entity/Provider.php';
-require_once __DIR__. '/src/Repository/ModelRepository.php';
-require_once __DIR__. '/src/Repository/ProviderRepository.php';
+require_once __DIR__ . '/vendor/autoload.php';
+use App\Core\Database;
+use App\Core\Security;
+use App\Core\View;
+use App\Entity\Model;
+use App\Entity\Provider;
+use App\Repository\ModelRepository;
+use App\Repository\ProviderRepository;
 
-$config = require_once __DIR__. '/config/config.php';
+session_start();
+
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
+
+$config = require_once __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
-
-if (isset($_GET['error'])) {
-    $errorMessage = $_GET['error'];
-    echo "Error: $errorMessage";
-}
 
 $modelRepository = new ModelRepository($database->getConnection(), Model::class);
 $models = $modelRepository->findAll();
@@ -21,4 +24,4 @@ $models = $modelRepository->findAll();
 $providerRepository = new ProviderRepository($database->getConnection(), Provider::class);
 $providers = $providerRepository->findAll();
 
-echo View::render('vehicle_create_confirmation', 'default', ['models' => $models, 'providers' => $providers]);
+echo View::render('vehicle_create_confirmation', 'backoffice', ['models' => $models, 'providers' => $providers]);

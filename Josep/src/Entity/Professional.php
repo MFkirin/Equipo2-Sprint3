@@ -1,9 +1,6 @@
 <?php
 
-namespace Entity;
-
-use Entity\Customer;
-
+namespace App\Entity;
 class Professional extends Customer
 {
     private string $CIF;

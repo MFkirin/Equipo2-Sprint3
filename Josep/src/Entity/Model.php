@@ -1,75 +1,111 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__. '/../Core/EntityInterface.php';
+namespace App\Entity;
+use App\Core\EntityInterface;
 
-class Model implements EntityInterface {
+class Model implements EntityInterface
+{
     private int $id;
     private string $name;
-    private string $gearType;
+    private string $enginePower;
     private string $description;
     private Brand $brand;
+    private int $brandId;
     private int $year;
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function setName(string $name): void {
+    public function setName(string $name): void
+    {
         $this->name = $name;
     }
 
-    public function getGearType(): string {
-        return $this->gearType;
+    public function getEnginePower(): string
+    {
+        return $this->enginePower;
     }
 
-    public function setGearType(string $gearType): void {
-        $this->gearType = $gearType;
+    public function setEnginePower(string $enginePower): void
+    {
+        $this->enginePower = $enginePower;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-    public function setDescription(string $description): void {
+    public function setDescription(string $description): void
+    {
         $this->description = $description;
     }
 
-    public function getBrand(): Brand {
+    public function getBrand(): Brand
+    {
         return $this->brand;
     }
 
-    public function setBrand(Brand $brand): void {
+    public function setBrand(Brand $brand): void
+    {
         $this->brand = $brand;
     }
 
-    public function getYear(): int {
+    public function getBrandId(): int
+    {
+        return $this->brandId;
+    }
+
+    public function setBrandId(int $brandId): void
+    {
+        $this->brandId = $brandId;
+    }
+
+    public function getYear(): int
+    {
         return $this->year;
     }
 
-    public function setYear(int $year): void {
+    public function setYear(int $year): void
+    {
         $this->year = $year;
     }
 
-    public static function fromArray(array $array): EntityInterface {
-        $name = new Model();
-        $name->setId($array["id"]);
-        $name->setName($array["name"]);
-        return $name;
+    public static function fromArray(array $array): EntityInterface
+    {
+        $model = new Model();
+        $model->setId($array["id"]);
+        $model->setName($array["name"]);
+        $model->setEnginePower($array["enginePower"]);
+        $model->setDescription($array["description"]);
+        $model->setBrandId($array["brand_id"]);
+        $model->setYear($array["year"]);
+
+        return $model;
     }
 
-
-    public static function toArray(EntityInterface $entity): array {
+    public static function toArray(EntityInterface $entity): array
+    {
         return [
             "id" => $entity->getId(),
-            "name" => $entity->getName()
+            "name" => $entity->getName(),
+            "enginePower" => $entity->getEnginePower(),
+            "description" => $entity->getDescription(),
+            "brand_id" => $entity->getBrandId(),
+            "year" => $entity->getYear(),
         ];
     }
 }

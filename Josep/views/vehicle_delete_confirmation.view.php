@@ -1,6 +1,11 @@
 <section>
     <h2>Confirmar Eliminació</h2>
+    <?php use App\Helper\FlashMessage;
 
+    if (isset($_SESSION["flash-message"]["message"])) {
+        echo '<p class="message">' . $_SESSION["flash-message"]["message"] . '</p>';
+        FlashMessage::unset("message");
+    } ;?>
     <p>Vols eliminar este vehicle?</p>
 
     <form action="/vehicle_delete_process.php" method="post">

@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__. '/../Core/Repository.php';
+namespace App\Repository;
 
 /**
  * La classe OrderRepository gestiona les operacions de persistència per a l'entitat Order.
+ * @author carest23
  */
 class OrderRepository extends Repository
 {
@@ -13,30 +15,57 @@ class OrderRepository extends Repository
      *
      * @param int $id L'ID del registre a recuperar.
      * @return EntityInterface Un objecte que representa el registre de la taula 'order'.
-     * @throws RecordNotFoundException Si no es troba cap registre amb l'ID proporcionat.
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function find(int $id): EntityInterface
     {
         try {
-            $pdoStatement = $this->pdo->prepare("SELECT * FROM order WHERE ID = :id");
+            $pdoStatement = $this->pdo->prepare("SELECT * FROM `order` WHERE ID = :id");
             $pdoStatement->execute([':id' => $id]);
 
-            // Comprovar si s'ha trobat un registre
             $orderRecord = $pdoStatement->fetch(PDO::FETCH_ASSOC);
             if (!$orderRecord) {
-                // Llançar una excepció si no s'ha trobat cap registre
-                throw new RecordNotFoundException("No s'ha trobat cap registre amb l'ID $id.");
+                FlashMessage::set("message", "No s'ha trobat cap registre amb l'ID $id.");
+                header('Location: order_list.php');
+                exit;
             }
 
-            // Instanciar un objecte de la classe especificada
             $orderObject = new $this->entityClassName;
             return $orderObject->fromArray($orderRecord);
 
-
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en la consulta: ' . $e->getMessage());
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: order_list.php');
+            exit;
+        }
+    }
+
+    /**
+     * Recupera un registre actiu de la taula 'order' basat en un ID de client proporcionat.
+     *
+     * @param int $customerId L'ID del client per al qual buscar una comanda activa.
+     * @return EntityInterface|null Un objecte que representa la comanda activa, o null si no s'ha trobat cap.
+     * @throws PDOException Si hi ha un error durant l'execució de la consulta.
+     * @author carest23
+     */
+    public function findActiveOrderByCustomer(int $customerId): ?EntityInterface
+    {
+        try {
+            $pdoStatement = $this->pdo->prepare("SELECT * FROM `order` WHERE customer_id = :customer_id AND state IN ('pending', 'processing')");
+            $pdoStatement->execute([':customer_id' => $customerId]);
+
+            $orderRecord = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$orderRecord) {
+                return null;
+            }
+
+            $orderObject = new $this->entityClassName;
+            return $orderObject->fromArray($orderRecord);
+        } catch (PDOException $e) {
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: catalogue_list.php');
+            exit;
         }
     }
 
@@ -45,24 +74,18 @@ class OrderRepository extends Repository
      *
      * @return array Un array que conté objectes de la classe especificada pel atribut 'entityClassName'.
      * Cada objecte és creat a partir de les dades dels registres de la base de dades.
-     * @throws PDOException Si hi ha algun error en l'execució de la consulta SQL.
+     * @author corriol
      */
     public function findAll(): array
     {
-        // Preparar la consulta SQL per seleccionar tots els registres de la taula 'login'.
-        $pdoStatement = $this->pdo->prepare("SELECT * FROM order");
-
-        // Executar la consulta SQL.
+        $pdoStatement = $this->pdo->prepare("SELECT * FROM `order`");
         $pdoStatement->execute();
 
-        // Establir el mode de recuperació a associatiu.
         $pdoStatement->setFetchMode(PDO::FETCH_ASSOC);
 
-        // Obtenir tots els registres de la base de dades.
         $orderRecords = $pdoStatement->fetchAll();
 
         $orders = [];
-        // Transformar els registres en objectes.
         foreach ($orderRecords as $orderRecord) {
             $orders[] = call_user_func_array([$this->entityClassName, "fromArray"], [$orderRecord]);
         }
@@ -75,32 +98,29 @@ class OrderRepository extends Repository
      *
      * @param EntityInterface $entity L'entitat que conté les dades per al nou registre.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function create(EntityInterface $entity): void
     {
         try {
-            // Obtenir les dades de l'objecte de l'entitat
             $data = Order::toArray($entity);
 
             unset($data["id"]);
 
-            // Crear la consulta SQL utilitzant consultes preparades
             $columns = implode(', ', array_keys($data));
             $values = ':' . implode(', :', array_keys($data));
 
-            // Preparar la consulta SQL
-            $pdoStatement = $this->pdo->prepare("INSERT INTO order ($columns) VALUES ($values)");
+            $pdoStatement = $this->pdo->prepare("INSERT INTO `order` ($columns) VALUES ($values)");
 
-            // Executar la consulta amb els valors de l'entitat
             $pdoStatement->execute($data);
 
             $id = $this->pdo->lastInsertId();
-            $entity->setId($id);
+            $entity->setId((int)$id);
 
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en crear un nou registre: ' . $e->getMessage());
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: order_list.php');
+            exit;
         }
     }
 
@@ -109,22 +129,21 @@ class OrderRepository extends Repository
      *
      * @param EntityInterface $entity L'entitat que conté la clau primària per al registre a eliminar.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function delete(EntityInterface $entity): void
     {
         try {
-            // Obtenir l'ID de l'objecte de l'entitat
             $id = $entity->getId();
 
-            // Preparar la consulta SQL utilitzant consultes preparades
-            $pdoStatement = $this->pdo->prepare("DELETE FROM order WHERE id = :id");
+            $pdoStatement = $this->pdo->prepare("DELETE FROM `order` WHERE id = :id");
 
-            // Executar la consulta amb el valor de l'ID
             $pdoStatement->execute([':id' => $id]);
+
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en eliminar el registre: ' . $e->getMessage());
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: order_list.php');
+            exit;
         }
     }
 
@@ -133,38 +152,33 @@ class OrderRepository extends Repository
      *
      * @param EntityInterface $entity L'entitat que conté les dades per al registre a actualitzar.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function update(EntityInterface $entity): void
     {
         try {
-            // Obtenir les dades de l'objecte de l'entitat
             $data = Order::toArray($entity);
 
-            // Obtenir l'ID de l'objecte de l'entitat
             $id = $entity->getId();
 
-            // Crear la llista d'assignacions per a l'actualització
             $updateAssignments = [];
             foreach (array_keys($data) as $column) {
                 $updateAssignments[] = "$column = :$column";
             }
             $updateSet = implode(', ', $updateAssignments);
 
-            // Preparar la consulta SQL utilitzant consultes preparades
-            $pdoStatement = $this->pdo->prepare("UPDATE order SET $updateSet WHERE id = :id");
+            $pdoStatement = $this->pdo->prepare("UPDATE `order` SET $updateSet WHERE id = :id");
 
-            // Assignar el valor de l'ID i els valors de l'entitat
             $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
             foreach ($data as $column => $value) {
                 $pdoStatement->bindValue(":$column", $value);
             }
-
-            // Executar la consulta
             $pdoStatement->execute();
+
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en actualitzar el registre: ' . $e->getMessage());
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: order_list.php');
+            exit;
         }
     }
 }

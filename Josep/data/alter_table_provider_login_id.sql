@@ -1,0 +1,1 @@
+ALTER TABLE `provider` ADD `login_id` INT(11) NOT NULL AFTER `constitution_article`;

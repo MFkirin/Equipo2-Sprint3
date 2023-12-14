@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__. '/src/Core/Database.php';
-require_once __DIR__. '/src/Core/View.php';
-require_once __DIR__. '/src/Entity/Image.php';
-require_once __DIR__. '/src/Repository/ImageRepository.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Core\Database;
+use App\Core\View;
+use App\Entity\Image;
+use App\Exception\RecordNotFoundException;
+use App\Repository\ImageRepository;
 
 $config = require_once __DIR__. '/config/config.php';
 

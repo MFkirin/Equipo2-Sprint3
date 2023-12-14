@@ -1,11 +1,19 @@
 <?php
-require_once __DIR__ . '/src/Core/Database.php';
-require_once __DIR__ . '/src/Core/View.php';
-require_once __DIR__ . '/src/Entity/Vehicle.php';
-require_once __DIR__ . '/src/Entity/Image.php';
-require_once __DIR__ . '/src/Repository/VehicleRepository.php';
-require_once __DIR__ . '/src/Repository/ImageRepository.php';
-require_once __DIR__ . '/src/Validator/VehicleValidator.php';
+require_once __DIR__ . '/vendor/autoload.php';
+use App\Core\Database;
+use App\Core\Security;
+use App\Entity\Image;
+use App\Entity\Vehicle;
+use App\Helper\FlashMessage;
+use App\Repository\ImageRepository;
+use App\Repository\VehicleRepository;
+use App\Validator\VehicleValidator;
+
+session_start();
+
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
 
 $config = require __DIR__ . '/config/config.php';
 
@@ -21,6 +29,7 @@ if (isset($_GET['error'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
+    $validator = new VehicleValidator();
     $uploadDirectory = 'assets/img/';
 
     $newVehicleArray = [
@@ -34,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'iva' => floatval($_POST['iva']),
         'description' => $_POST['description'],
         'chassis_number' => $_POST['chassis_number'],
-        'gear_shift' => $_POST['gear_shift'],
+        'gearbox' => $_POST['gearbox'],
         'is_new' => $_POST['is_new'],
         'transport_included' => $_POST['transport_included'],
         'color' => $_POST['color'],
@@ -44,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $newVehicle = Vehicle::fromArray($newVehicleArray);
+    $errors = $validator->validate($newVehicle);
 
     if (empty($errors)) {
         try {
@@ -69,17 +79,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: /vehicle_list.php");
             exit;
         } catch (Exception $exception) {
-            $error_message = urlencode("Error en insertar les dades: " . $exception->getMessage());
-            header("Location: /vehicle_create.php?error=" . $error_message);
+            FlashMessage::set("message", "Error en insertar les dades: " . $exception->getMessage());
+            header('Location: /vehicle_create.php');
             exit;
         }
     } else {
         $errorMessages = implode(', ', $errors);
-        $error_message = urlencode("Errors de validació: $errorMessages");
-        header("Location: /vehicle_create.php?error=" . $error_message);
+        FlashMessage::set("message", "Errors de validació: $errorMessages");
+        header('Location: /vehicle_create.php');
         exit;
     }
 } else {
-    header("Location: /vehicle_list.php?error=Vehicle no trobat");
+    FlashMessage::set("message", "Vehicle no trobat");
+    header('Location: /vehicle_list.php');
     exit;
 }

@@ -1,10 +1,17 @@
 <?php
-require_once __DIR__. '/src/Core/Database.php';
-require_once __DIR__. '/src/Core/View.php';
-require_once __DIR__. '/src/Entity/Login.php';
-require_once __DIR__. '/src/Repository/LoginRepository.php';
+require_once __DIR__ . '/src/Core/Database.php';
+require_once __DIR__ . '/src/Core/View.php';
+require_once __DIR__ . '/src/Entity/Login.php';
+require_once __DIR__ . '/src/Repository/LoginRepository.php';
+require_once __DIR__ . '/src/Helper/FlashMessage.php';
+require_once __DIR__ . '/src/Core/Security.php';
+session_start();
 
-$config = require_once __DIR__. '/config/config.php';
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
+
+$config = require_once __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
 $loginRepository = new LoginRepository($database->getConnection(), Login::class);
@@ -22,14 +29,16 @@ if ($idToDelete !== false) {
 
     // Verificar si s'ha trobat el login abans de mostrar la vista de confirmació
     if ($loginToDelete !== null) {
-        echo View::render('delete_confirmation', 'default', ["loginToDelete" => $loginToDelete]);
+        echo View::render('login_delete_confirmation', 'default', ["loginToDelete" => $loginToDelete]);
     } else {
         // Gestionar el cas en què el login no es troba
-        header("Location: /login_list.php?error=Login no trobat");
+        FlashMessage::set("message", "Login no trobat");
+        header('Location: login_list.php');
         exit;
     }
 } else {
     // Gestionar el cas en què l'ID no és un enter vàlid
-    header("Location: /login_list.php?error=ID no vàlid");
+    FlashMessage::set("message", "ID no vàlid");
+    header('Location: login_list.php');
     exit;
 }

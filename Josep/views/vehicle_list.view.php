@@ -1,5 +1,10 @@
 <section>
-    <h2>Inicis de sessió</h2>
+    <?php use App\Helper\FlashMessage;
+
+    if (isset($_SESSION["flash-message"]["message"])) {
+        echo '<p class="message">' . $_SESSION["flash-message"]["message"] . '</p>';
+        FlashMessage::unset("message");
+    } ;?>
     <a href="/vehicle_create.php">
         <button type="button" class="create-login-button">Insertar nou Vehicle</button>
     </a>

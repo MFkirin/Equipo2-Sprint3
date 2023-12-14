@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Exception;
+
 class RecordNotFoundException extends Exception
 {
     public function __construct($message, $code = 0, Exception $previous = null)

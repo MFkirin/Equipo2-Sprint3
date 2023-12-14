@@ -1,5 +1,9 @@
 <section>
     <h2>Inicis de sessió</h2>
+    <?php if (isset($_SESSION["flash-message"]["message"])) {
+        echo '<p class="message">' . $_SESSION["flash-message"]["message"] . '</p>';
+        FlashMessage::unset("message");
+    }; ?>
     <a href="/login_create.php">
         <button type="button" class="create-login-button">Crear Nuevo Login</button>
     </a>
@@ -22,7 +26,7 @@
                 <td><?= $login->getRole() ?></td>
                 <td><a href="/login_update.php?id=<?= $login->getId(); ?>" class="operation-link edit-link">Editar</a>
                 </td>
-                <td><a href="/vehicle_delete.php?id=<?= $login->getId(); ?>"
+                <td><a href="/login_delete.php?id=<?= $login->getId(); ?>"
                        class="operation-link delete-link">Eliminar</a></td>
 
             </tr>

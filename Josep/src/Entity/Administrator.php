@@ -1,8 +1,6 @@
 <?php
 
-namespace Entity;
-
-use Entity\Employee;
+namespace App\Entity;
 
 class Administrator extends Employee
 {

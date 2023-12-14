@@ -1,8 +1,13 @@
 <?php
 
-require_once __DIR__. '/../Core/EntityInterface.php';
+declare(strict_types=1);
 
-class Provider implements EntityInterface {
+namespace App\Entity;
+use App\Core\EntityInterface;
+
+class Provider implements EntityInterface
+{
+    //Attributes
     private int $id;
     private string $email;
     private string $phone;
@@ -14,87 +19,111 @@ class Provider implements EntityInterface {
     private string $LOPDdoc;
     private string $constitutionArticle;
 
-    public function getId(): int {
-        return $this->id;
-    }
+    //Getters ans Setters
 
-    public function setId(int $id): void {
-        $this->id = $id;
-    }
-
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->email;
     }
 
-    public function setEmail(string $email): void {
+    public function setEmail(string $email): void
+    {
         $this->email = $email;
     }
 
-    public function getPhone(): string {
+    public function getPhone(): string
+    {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): void {
+    public function setPhone(string $phone): void
+    {
         $this->phone = $phone;
     }
 
-    public function getDni(): string {
+    public function getDni(): string
+    {
         return $this->dni;
     }
 
-    public function setDni(string $dni): void {
+    public function setDni(string $dni): void
+    {
         $this->dni = $dni;
     }
 
-    public function getCif(): string {
+    public function getCif(): string
+    {
         return $this->cif;
     }
 
-    public function setCif(string $cif): void {
+    public function setCif(string $cif): void
+    {
         $this->cif = $cif;
     }
 
-    public function getAddress(): string {
+    public function getAddress(): string
+    {
         return $this->address;
     }
 
-    public function setAddress(string $address): void {
+    public function setAddress(string $address): void
+    {
         $this->address = $address;
     }
 
-    public function getBankTitle(): string {
+    public function getBankTitle(): string
+    {
         return $this->bankTitle;
     }
 
-    public function setBankTitle(string $bankTitle): void {
+    public function setBankTitle(string $bankTitle): void
+    {
         $this->bankTitle = $bankTitle;
     }
 
-    public function getManagerNIF(): string {
+    public function getManagerNIF(): string
+    {
         return $this->managerNIF;
     }
 
-    public function setManagerNIF(string $managerNIF): void {
+    public function setManagerNIF(string $managerNIF): void
+    {
         $this->managerNIF = $managerNIF;
     }
 
-    public function getLOPDdoc(): string {
+    public function getLOPDdoc(): string
+    {
         return $this->LOPDdoc;
     }
 
-    public function setLOPDdoc(string $LOPDdoc): void {
+    public function setLOPDdoc(string $LOPDdoc): void
+    {
         $this->LOPDdoc = $LOPDdoc;
     }
 
-    public function getConstitutionArticle(): string {
+    public function getConstitutionArticle(): string
+    {
         return $this->constitutionArticle;
     }
 
-    public function setConstitutionArticle(string $constitutionArticle): void {
+    public function setConstitutionArticle(string $constitutionArticle): void
+    {
         $this->constitutionArticle = $constitutionArticle;
     }
 
-    public static function fromArray(array $array): EntityInterface {
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    private function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+
+    public static function fromArray(array $array): EntityInterface
+    {
         $provider = new Provider();
         $provider->setId($array["id"]);
         $provider->setEmail($array["email"]);
@@ -110,7 +139,8 @@ class Provider implements EntityInterface {
     }
 
 
-    public static function toArray(EntityInterface $entity): array {
+    public static function toArray(EntityInterface $entity): array
+    {
         return [
             "id" => $entity->getId(),
             "email" => $entity->getEmail(),
@@ -118,10 +148,10 @@ class Provider implements EntityInterface {
             "dni" => $entity->getDni(),
             "cif" => $entity->getCif(),
             "address" => $entity->getAddress(),
-            "bankTitle" => $entity->getBankTitle(),
-            "managerNif" => $entity->getManagerNif(),
-            "LOPDdoc" => $entity->getLOPDdoc(),
-            "constitutionArticle" => $entity->getConstitutionArticle()
+            "bank_title" => $entity->getBankTitle(),
+            "manager_nif" => $entity->getManagerNif(),
+            "lopd_doc" => $entity->getLOPDdoc(),
+            "constitution_article" => $entity->getConstitutionArticle()
         ];
     }
 }

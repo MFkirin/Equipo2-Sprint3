@@ -1,18 +1,19 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__. '/../Core/Repository.php';
+namespace App\Repository;
 
 /**
- * La classe LoginRepository gestiona les operacions de persistència per a l'entitat Login.
+ * La classe EmployeeRepository gestiona les operacions de persistència per a l'entitat Employee.
  */
 class EmployeeRepository extends Repository
 {
 
     /**
-     * Recupera un registre de la taula 'login' basat en un ID proporcionat.
+     * Recupera un registre de la taula 'employee' basat en un ID proporcionat.
      *
      * @param int $id L'ID del registre a recuperar.
-     * @return EntityInterface Un objecte que representa el registre de la taula 'login'.
+     * @return EntityInterface Un objecte que representa el registre de la taula 'employee'.
      * @throws RecordNotFoundException Si no es troba cap registre amb l'ID proporcionat.
      * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
      */
@@ -42,9 +43,9 @@ class EmployeeRepository extends Repository
 
 
     /**
-     * Recupera tots els registres de la taula 'login' i els transforma en objectes.
+     * Recupera tots els registres de la taula 'employee' i els transforma en objectes.
      *
-     * @return array Un array d'objectes representant els registres de la taula 'login'.
+     * @return array Un array d'objectes representant els registres de la taula 'employee'.
      * @throws RuntimeException Si ocorre algun error durant l'execució de la consulta.
      */
     public function findAll(): array
@@ -98,7 +99,7 @@ class EmployeeRepository extends Repository
             $pdoStatement->execute($data);
 
             $id = $this->pdo->lastInsertId();
-            $entity->setId($id);
+            $entity->setId((int)$id);
 
         } catch (PDOException $e) {
             // Gestionar l'excepció i llançar una RuntimeException
@@ -143,7 +144,6 @@ class EmployeeRepository extends Repository
         try {
             // Obtenir les dades de l'objecte de l'entitat
             $data = Login::toArray($entity);
-            var_dump($data);
 
             // Obtenir l'ID de l'objecte de l'entitat
             $id = $entity->getId();
@@ -154,8 +154,6 @@ class EmployeeRepository extends Repository
                 $updateAssignments[] = "$column = :$column";
             }
             $updateSet = implode(', ', $updateAssignments);
-
-            var_dump($updateSet);
 
             // Preparar la consulta SQL utilitzant consultes preparades
             $pdoStatement = $this->pdo->prepare("UPDATE employee SET $updateSet WHERE id = :id");

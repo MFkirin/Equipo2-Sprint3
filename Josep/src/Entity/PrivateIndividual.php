@@ -1,9 +1,7 @@
 <?php
 
-namespace Entity;
-
-use Entity\Customer;
-
+namespace App\Entity;
+namespace App\Entity;
 class PrivateIndividual extends Customer
 {
 

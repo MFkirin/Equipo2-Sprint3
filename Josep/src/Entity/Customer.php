@@ -1,10 +1,9 @@
 <?php
 
-namespace Entity;
+declare(strict_types=1);
 
-use Login;
-
-class Customer
+namespace App\Entity;
+class Customer implements EntityInterface
 {
     private int $id;
     private string $name;
@@ -15,6 +14,17 @@ class Customer
     private string $businessName;
     private string $email;
     private Login $login;
+    private int $login_id;
+
+    public function getLoginId(): int
+    {
+        return $this->login_id;
+    }
+
+    public function setLoginId(int $login_id): void
+    {
+        $this->login_id = $login_id;
+    }
 
     public function getId(): int
     {
@@ -104,5 +114,38 @@ class Customer
     public function setLogin(Login $login): void
     {
         $this->login = $login;
+    }
+
+    public static function fromArray(array $array): EntityInterface
+    {
+        // TODO: Implement fromArray() method.
+        $customer = new Customer();
+        $customer->setId($array["id"]);
+        $customer->setName($array["name"]);
+        $customer->setLastname($array["lastname"]);
+        $customer->setAddress($array["address"]);
+        $customer->setDni($array["dni"]);
+        $customer->setPhone($array["phone"]);
+        $customer->setBusinessName($array["bussiness_name"]);
+        $customer->setEmail($array["email"]);
+        $customer->setLoginId($array["login_id"]);
+
+        return $customer;
+    }
+
+    public static function toArray(EntityInterface $entity): array
+    {
+        // TODO: Implement toArray() method.
+        return [
+            "id" => $entity->getId(),
+            "name" => $entity->getName(),
+            "lastname" => $entity->getLastname(),
+            "address" => $entity->getAddress(),
+            "dni" => $entity->getDni(),
+            "phone" => $entity->getPhone(),
+            "bussiness_name" => $entity->getBusinessName(),
+            "email" => $entity->getEmail(),
+            "login_id" => $entity->getLoginId()
+        ];
     }
 }

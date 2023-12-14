@@ -1,23 +1,24 @@
 <?php
-require_once __DIR__ . '/src/Core/Database.php';
-require_once __DIR__ . '/src/Core/View.php';
-require_once __DIR__ . '/src/Entity/Vehicle.php';
-require_once __DIR__ . '/src/Entity/Image.php';
-require_once __DIR__ . '/src/Repository/VehicleRepository.php';
-require_once __DIR__ . '/src/Repository/ImageRepository.php';
-require_once __DIR__ . '/src/Validator/VehicleValidator.php';
+require_once __DIR__ . '/vendor/autoload.php';
+use App\Core\Database;
+use App\Core\Security;
+use App\Entity\Image;
+use App\Entity\Vehicle;
+use App\Helper\FlashMessage;
+use App\Repository\ImageRepository;
+use App\Repository\VehicleRepository;
+
+session_start();
+
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
 
 $config = require __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
 $vehicleRepository = new VehicleRepository($database->getConnection(), Vehicle::class);
 $imageRepository = new ImageRepository($database->getConnection(), Image::class);
-
-if (isset($_GET['error'])) {
-    $errorMessage = $_GET['error'];
-    echo "Error: $errorMessage";
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idToUpdate = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
@@ -41,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'iva' => floatval($_POST['iva']),
                 'description' => $_POST['description'],
                 'chassis_number' => $_POST['chassis_number'],
-                'gear_shift' => $_POST['gear_shift'],
+                'gearbox' => $_POST['gearbox'],
                 'is_new' => boolval($_POST['is_new']),
                 'transport_included' => boolval($_POST['transport_included']),
                 'color' => $_POST['color'],
@@ -58,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (!empty($_FILES['image']['name'][0])) {
                         foreach ($_FILES['image']['name'] as $key => $filename) {
-                            // Verificar errores de subida
                             if ($_FILES['image']['error'][$key] !== UPLOAD_ERR_OK) {
                                 echo "Error al subir la imagen: {$_FILES['image']['error'][$key]}";
                                 exit;
@@ -81,18 +81,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: /vehicle_list.php");
                     exit;
                 } catch (Exception $exception) {
-                    echo "Error updating vehicle data: " . $exception->getMessage();
+                    FlashMessage::set("message", "Error updating vehicle data: " . $exception->getMessage());
+                    header('Location: /vehicle_list.php');
+                    exit;
                 }
             } else {
-                var_dump($vehicleToUpdate);
-                var_dump($errors);
+                $errorMessages = implode(', ', $errors);
+                FlashMessage::set("message", "Errors: " . $errorMessages);
+                header('Location: /vehicle_list.php');
+                exit;
             }
         } else {
-            header("Location: /vehicle_list.php?error=Vehicle not found");
+            FlashMessage::set("message", "Vehicle no trobat");
+            header('Location: /vehicle_list.php');
             exit;
         }
     } else {
-        header("Location: /vehicle_list.php?error=Invalid ID");
+        FlashMessage::set("message", "ID no vàlid.");
+        header('Location: /vehicle_list.php');
         exit;
     }
 } else {

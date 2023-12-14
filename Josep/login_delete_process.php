@@ -1,20 +1,20 @@
 <?php
-require_once __DIR__. '/src/Core/Database.php';
-require_once __DIR__. '/src/Core/View.php';
-require_once __DIR__. '/src/Entity/Login.php';
-require_once __DIR__. '/src/Repository/LoginRepository.php';
+require_once __DIR__ . '/src/Core/Database.php';
+require_once __DIR__ . '/src/Core/View.php';
+require_once __DIR__ . '/src/Entity/Login.php';
+require_once __DIR__ . '/src/Repository/LoginRepository.php';
+require_once __DIR__ . '/src/Helper/FlashMessage.php';
+require_once __DIR__ . '/src/Core/Security.php';
+session_start();
 
-$config = require_once __DIR__. '/config/config.php';
+$token = Security::getToken();
+Security::isToken($token);
+Security::isRoleAdministrator($token);
+
+$config = require_once __DIR__ . '/config/config.php';
 
 $database = new Database($config["database"]);
 $loginRepository = new LoginRepository($database->getConnection(), Login::class);
-
-// Comprovar si hi ha un paràmetre d'error a la URL
-if (isset($_GET['error'])) {
-    $errorMessage = $_GET['error'];
-    echo "Error: $errorMessage";
-    exit;
-}
 
 // Verificar si s'ha enviat el formulari de confirmació
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,24 +28,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verificar si s'ha trobat el login abans d'intentar eliminar-lo
         if ($loginToDelete !== null) {
-            // Eliminar el login
-            $loginRepository->delete($loginToDelete);
+            try {
+                // Intentar eliminar el login
+                $loginRepository->delete($loginToDelete);
 
-            // Redirigir a login_list.php després de l'eliminació
-            header("Location: /login_list.php");
-            exit;
+                // Redirigir a login_list.php después de la eliminación
+                header("Location: /login_list.php");
+                exit;
+            } catch (\Exception $exception) {
+                // Manejar la excepción
+                FlashMessage::set("message", "Error al eliminar el registro: " . $exception->getMessage());
+                header('Location: login_list.php');
+                exit;
+            }
+
         } else {
             // Gestionar el cas en què el login no es troba
-            header("Location: /login_list.php?error=Login no trobat");
+            FlashMessage::set("message", "Login no trobat");
+            header('Location: login_list.php');
             exit;
         }
     } else {
         // Gestionar el cas en què l'ID no és un enter vàlid
-        header("Location: /login_list.php?error=ID no vàlid");
+        FlashMessage::set("message", "ID no vàlid");
+        header('Location: login_list.php');
         exit;
     }
 } else {
     // Si no s'ha enviat el formulari, redirigir a login_list.php
-    header("Location: /login_list.php");
+    FlashMessage::set("message", "No s'ha enviat el formulari");
+    header('Location: login_list.php');
     exit;
 }

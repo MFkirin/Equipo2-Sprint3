@@ -1,11 +1,20 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__. '/../Core/Repository.php';
+namespace App\Repository;
+
+use App\Core\EntityInterface;
+use App\Core\Repository;
+use App\Entity\Invoice;
+use App\Helper\FlashMessage;
+use PDO;
+use PDOException;
 
 /**
  * La classe InvoiceRepository gestiona les operacions de persistència per a l'entitat Invoice.
+ * @author carest23
  */
-class InvoiceRepository extends \Repository
+class InvoiceRepository extends Repository
 {
 
     /**
@@ -13,8 +22,7 @@ class InvoiceRepository extends \Repository
      *
      * @param int $id L'ID del registre a recuperar.
      * @return EntityInterface Un objecte que representa el registre de la taula 'invoice'.
-     * @throws RecordNotFoundException Si no es troba cap registre amb l'ID proporcionat.
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function find(int $id): EntityInterface
     {
@@ -22,21 +30,72 @@ class InvoiceRepository extends \Repository
             $pdoStatement = $this->pdo->prepare("SELECT * FROM invoice WHERE ID = :id");
             $pdoStatement->execute([':id' => $id]);
 
-            // Comprovar si s'ha trobat un registre
             $invoiceRecord = $pdoStatement->fetch(PDO::FETCH_ASSOC);
             if (!$invoiceRecord) {
-                // Llançar una excepció si no s'ha trobat cap registre
-                throw new RecordNotFoundException("No s'ha trobat cap registre amb l'ID $id.");
+                FlashMessage::set("message", "No s'ha trobat cap registre amb l'ID $id.");
+                header('Location: /invoice_list.php');
+                exit;
             }
 
-            // Instanciar un objecte de la classe especificada
             $invoiceObject = new $this->entityClassName;
             return $invoiceObject->fromArray($invoiceRecord);
 
+        } catch (PDOException $e) {
+            FlashMessage::set("message", 'Error en la consulta: ' . $e->getMessage());
+            header('Location: /invoice_list.php');
+            exit;
+        }
+    }
+
+    /**
+     * Comprova si existeix una factura amb el número proporcionat.
+     *
+     * @param string $invoiceNumber El número de la factura a comprovar.
+     * @return bool True si existeix una factura amb aquest número, False si no.
+     * @author carest23
+     */
+    public function findByNumber(string $invoiceNumber): bool
+    {
+        try {
+            $pdoStatement = $this->pdo->prepare("SELECT COUNT(*) FROM invoice WHERE number = :number");
+            $pdoStatement->execute([':number' => $invoiceNumber]);
+
+            $count = $pdoStatement->fetchColumn();
+
+            return $count > 0;
 
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en la consulta: ' . $e->getMessage());
+            FlashMessage::set("message", 'Error en la consulta: ' . $e->getMessage());
+            header('Location: /invoice_list.php');
+            exit;
+        }
+    }
+
+    /**
+     * Recupera la factura associada a un ID d'ordre proporcionat.
+     *
+     * @param int $orderId L'ID d'ordre per al qual buscar la factura associada.
+     * @return EntityInterface|null Un objecte que representa la factura associada, o null si no s'ha trobat cap.
+     * @author carest23
+     */
+    public function findByOrderId(int $orderId): ?EntityInterface
+    {
+        try {
+            $pdoStatement = $this->pdo->prepare("SELECT * FROM invoice WHERE order_id = :order_id");
+            $pdoStatement->execute([':order_id' => $orderId]);
+
+            $invoiceRecord = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+
+            if (!$invoiceRecord) {
+                return null;
+            }
+
+            $invoiceObject = new $this->entityClassName;
+            return $invoiceObject->fromArray($invoiceRecord);
+        } catch (PDOException $e) {
+            FlashMessage::set("message", "Error en la consulta: " . $e->getMessage());
+            header('Location: catalogue_list.php');
+            exit;
         }
     }
 
@@ -45,24 +104,18 @@ class InvoiceRepository extends \Repository
      *
      * @return array Un array que conté objectes de la classe especificada pel atribut 'entityClassName'.
      * Cada objecte és creat a partir de les dades dels registres de la base de dades.
-     * @throws PDOException Si hi ha algun error en l'execució de la consulta SQL.
+     * @author corriol
      */
     public function findAll(): array
     {
-        // Preparar la consulta SQL per seleccionar tots els registres de la taula 'invoice'.
         $pdoStatement = $this->pdo->prepare("SELECT * FROM invoice");
-
-        // Executar la consulta SQL.
         $pdoStatement->execute();
 
-        // Establir el mode de recuperació a associatiu.
         $pdoStatement->setFetchMode(PDO::FETCH_ASSOC);
 
-        // Obtenir tots els registres de la base de dades.
         $invoiceRecords = $pdoStatement->fetchAll();
 
         $invoices = [];
-        // Transformar els registres en objectes.
         foreach ($invoiceRecords as $invoiceRecord) {
             $invoices[] = call_user_func_array([$this->entityClassName, "fromArray"], [$invoiceRecord]);
         }
@@ -75,32 +128,29 @@ class InvoiceRepository extends \Repository
      *
      * @param EntityInterface $entity L'entitat que conté les dades per al nou registre.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function create(EntityInterface $entity): void
     {
         try {
-            // Obtenir les dades de l'objecte de l'entitat
             $data = Invoice::toArray($entity);
 
             unset($data["id"]);
 
-            // Crear la consulta SQL utilitzant consultes preparades
             $columns = implode(', ', array_keys($data));
             $values = ':' . implode(', :', array_keys($data));
 
-            // Preparar la consulta SQL
             $pdoStatement = $this->pdo->prepare("INSERT INTO invoice ($columns) VALUES ($values)");
 
-            // Executar la consulta amb els valors de l'entitat
             $pdoStatement->execute($data);
 
             $id = $this->pdo->lastInsertId();
-            $entity->setId($id);
+            $entity->setId((int)$id);
 
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en crear un nou registre: ' . $e->getMessage());
+            FlashMessage::set("message", 'Error en crear un nou registre: ' . $e->getMessage());
+            header('Location: /invoice_create.php');
+            exit;
         }
     }
 
@@ -109,22 +159,20 @@ class InvoiceRepository extends \Repository
      *
      * @param EntityInterface $entity L'entitat que conté la clau primària per al registre a eliminar.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function delete(EntityInterface $entity): void
     {
         try {
-            // Obtenir l'ID de l'objecte de l'entitat
             $id = $entity->getId();
 
-            // Preparar la consulta SQL utilitzant consultes preparades
             $pdoStatement = $this->pdo->prepare("DELETE FROM invoice WHERE id = :id");
-
-            // Executar la consulta amb el valor de l'ID
             $pdoStatement->execute([':id' => $id]);
+
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en eliminar el registre: ' . $e->getMessage());
+            FlashMessage::set("message", 'Error en eliminar el registre: ' . $e->getMessage());
+            header('Location: /invoice_list.php');
+            exit;
         }
     }
 
@@ -133,38 +181,33 @@ class InvoiceRepository extends \Repository
      *
      * @param EntityInterface $entity L'entitat que conté les dades per al registre a actualitzar.
      * @return void
-     * @throws RuntimeException Si hi ha algun error durant l'execució de la consulta.
+     * @author carest23
      */
     public function update(EntityInterface $entity): void
     {
         try {
-            // Obtenir les dades de l'objecte de l'entitat
             $data = Invoice::toArray($entity);
 
-            // Obtenir l'ID de l'objecte de l'entitat
             $id = $entity->getId();
 
-            // Crear la llista d'assignacions per a l'actualització
             $updateAssignments = [];
             foreach (array_keys($data) as $column) {
                 $updateAssignments[] = "$column = :$column";
             }
             $updateSet = implode(', ', $updateAssignments);
 
-            // Preparar la consulta SQL utilitzant consultes preparades
             $pdoStatement = $this->pdo->prepare("UPDATE invoice SET $updateSet WHERE id = :id");
 
-            // Assignar el valor de l'ID i els valors de l'entitat
             $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
             foreach ($data as $column => $value) {
                 $pdoStatement->bindValue(":$column", $value);
             }
 
-            // Executar la consulta
             $pdoStatement->execute();
         } catch (PDOException $e) {
-            // Gestionar l'excepció i llançar una RuntimeException
-            throw new RuntimeException('Error en actualitzar el registre: ' . $e->getMessage());
+            FlashMessage::set("message", 'Error en actualitzar el registre: ' . $e->getMessage());
+            header('Location: /invoice_list.php');
+            exit;
         }
     }
 }

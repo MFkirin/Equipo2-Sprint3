@@ -1,11 +1,10 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . "/Order.php";
-require_once __DIR__ . "/Customer.php";
-require_once __DIR__ . '/../Core/EntityInterface.php';
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../Repository/CustomerRepository.php';
-require_once __DIR__ . '/../Repository/OrderRepository.php';
+namespace App\Entity;
+
+use App\Core\EntityInterface;
+use DateTime;
 
 class Invoice implements EntityInterface
 {
@@ -15,6 +14,8 @@ class Invoice implements EntityInterface
     private DateTime $date;
     private Customer $customer;
     private Order $order;
+    private int $customerId;
+    private int $orderId;
 
     public function getId(): int
     {
@@ -61,16 +62,19 @@ class Invoice implements EntityInterface
         return $this->customer;
     }
 
-    public function setCustomerId(int $customerId, CustomerRepository $customerRepository, Invoice $invoice): void
-    {
-        $this->id = $customerId;
-        $customer = $customerRepository->find($customerId);
-        $invoice->setCustomer($customer);
-    }
-
     public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getCustomerId(): int
+    {
+        return $this->customerId;
+    }
+
+    public function setCustomerId(int $customerId): void
+    {
+        $this->customerId = $customerId;
     }
 
     public function getOrder(): Order
@@ -83,31 +87,27 @@ class Invoice implements EntityInterface
         $this->order = $order;
     }
 
-    public function setOrderId(int $orderId, OrderRepository $orderRepository, Invoice $invoice): void
+    public function getOrderId(): int
     {
-        $this->id = $orderId;
-        $order = $orderRepository->find($orderId);
-        $invoice->setOrder($order);
+        return $this->orderId;
+    }
+
+    public function setOrderId(int $orderId): void
+    {
+        $this->orderId = $orderId;
     }
 
     public static function fromArray(array $array): EntityInterface
     {
-        $config = require_once __DIR__. '/../../config/config.php';
-        $database = new Database($config["database"]);
-        $customerRepository = new CustomerRepository($database->getConnection(), Customer::class);
-        $orderRepository = new OrderRepository($database->getConnection(), Order::class);
+        $config = require __DIR__ . '/../../config/config.php';
 
         $invoice = new Invoice();
-        $invoice->setId($array["id"]);
-        $invoice->setNumber($array["number"]);
-        $invoice->setPrice($array["price"]);
-        $invoice->setDate($array["date"]);
-
-        $customerId = (int)$array["customer_id"];
-        $invoice->setCustomerId($customerId);
-
-        $orderId = (int)$array["order_id"];
-        $invoice->setOrderId($orderId);
+        $invoice->setId((int)$array["id"]);
+        $invoice->setNumber((string)$array["number"]);
+        $invoice->setPrice((float)$array["price"]);
+        $invoice->setDate(new DateTime($array["date"]));
+        $invoice->setCustomerId((int)$array["customer_id"]);
+        $invoice->setOrderId((int)$array["order_id"]);
 
         return $invoice;
     }
@@ -116,11 +116,11 @@ class Invoice implements EntityInterface
     {
         return [
             "id" => $entity->getId(),
-            "number" => $entity->getNumber(),
-            "price" => $entity->getPrice(),
-            "date" => $entity->getDate(),
-            "customer_id" => $entity->getCustomer()->getId(),
-            "order_id" => $entity->getOrder()->getId()
+            "number" => (string)$entity->getNumber(),
+            "price" => (float)$entity->getPrice(),
+            "date" => $entity->getDate()->format('Y-m-d'),
+            "customer_id" => (int)$entity->getCustomerId(),
+            "order_id" => (int)$entity->getOrderId()
         ];
     }
 }

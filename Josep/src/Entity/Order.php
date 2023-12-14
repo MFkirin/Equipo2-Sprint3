@@ -1,16 +1,16 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . "/Customer.php";
-require_once __DIR__ . '/../Core/EntityInterface.php';
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../Repository/CustomerRepository.php';
+namespace App\Entity;
 
 class Order implements EntityInterface
 {
     private int $id;
     private array $vehicles = [];
     private string $state;
-    private Customer $customer;
+    private Customer $customer ;
+    private int $customerId;
+    private float $totalPrice;
 
     public function getId(): int
     {
@@ -52,26 +52,34 @@ class Order implements EntityInterface
         $this->customer = $customer;
     }
 
-    public function setCustomerId(int $customerId, CustomerRepository $customerRepository, Order $order): void
+    public function getCustomerId(): int
     {
-        $this->id = $customerId;
-        $customer = $customerRepository->find($customerId);
-        $order->setCustomer($customer);
+        return $this->customerId;
+    }
+
+    public function setCustomerId(int $customerId): void
+    {
+        $this->customerId = $customerId;
+    }
+
+    public function getTotalPrice(): float
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(float $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
     }
 
     public static function fromArray(array $array): EntityInterface
     {
-        $config = require_once __DIR__. '/../../config/config.php';
-        $database = new Database($config["database"]);
-        $customerRepository = new CustomerRepository($database->getConnection(), Customer::class);
+        $config = require __DIR__ . '/../../config/config.php';
 
         $order = new Order();
-        $order->setId($array["id"]);
-        $order->setVehicles($array["vehicles"]);
-        $order->setState($array["state"]);
-
-        $customerId = (int)$array["customer_id"];
-        $order->setCustomerId($customerId);
+        $order->setId((int)$array["id"]);
+        $order->setState((string)$array["state"]);
+        $order->setCustomerId((int)$array["customer_id"]);
 
         return $order;
     }
@@ -80,9 +88,8 @@ class Order implements EntityInterface
     {
         return [
             "id" => $entity->getId(),
-            "vehicles[]" => $entity->getVehicles(),
-            "state" => $entity->getState(),
-            "customer_id" => $entity->getCustomer()->getId(),
+            "state" => (string)$entity->getState(),
+            "customer_id" => (int)$entity->getCustomerId(),
         ];
     }
 }

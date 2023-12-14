@@ -1,27 +1,32 @@
 <?php
-
 declare(strict_types=1);
 
-require_once __DIR__. '/../Core/EntityInterface.php';
+namespace App\Entity;
+use App\Core\EntityInterface;
 
-class Image implements EntityInterface {
+class Image implements EntityInterface
+{
     private int $id;
     private string $filename;
     private int $vehicle_id;
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
-    public function getFilename(): string {
+    public function getFilename(): string
+    {
         return $this->filename;
     }
 
-    public function setFilename(string $filename): void {
+    public function setFilename(string $filename): void
+    {
         $this->filename = $filename;
     }
 
