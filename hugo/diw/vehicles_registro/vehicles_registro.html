@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038) -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista de factures</title>
+    <link href="./Llista de vehicles_files/Normalize.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/grid.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/backoffice-skeleton.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/styles_order.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/modal.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/content-back.css" type="text/css" rel="stylesheet">
+    <link href="./Llista de vehicles_files/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="./Llista de vehicles_files/all.min.css">
+
+    <!-- JavaScript -->
+    <script src="./Llista de vehicles_files/jquery-3.7.0.js"></script>
+    <script src="./Llista de vehicles_files/jquery.tablesorter.min.js"
+        integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./Llista de vehicles_files/jquery-3.7.0.js" defer=""></script>
+    <script src="./Llista de vehicles_files/modal.js" defer=""></script>
+    <script src="./Llista de vehicles_files/searcher.js" defer=""></script>
+    <script src="./Llista de vehicles_files/menu_aside.js" defer=""></script>
+    <script src="./Llista de vehicles_files/menu-burguer.js" defer=""></script>
+    <script src="./Llista de vehicles_files/form_proveedores.js" defer=""></script>
+    <script src="./Llista de vehicles_files/taules.js" defer=""></script>
+    <script src="./Llista de vehicles_files/tableSorter.js" defer=""></script>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="headerDiv">
+                        <a href="#">
+                            <div id="logoAndNav">
+                                <img src="./Llista de vehicles_files/logoBHEC.png" alt="Logo">
+                            </div>
+                        </a>
+                        <nav id="menu-desktop" class="navIcons">
+                            <a href="#"><img src="./Llista de vehicles_files/usuari-Groc.png" alt="user" class="icon"
+                                    id="usuari"></a>
+                        </nav>
+
+                        <nav id="menu-mobile">
+                            <div id="burger">
+                                <span class="line1"></span>
+                                <span class="line2"></span>
+                                <span class="line3"></span>
+                            </div>
+                            <div class="ocultMenu">
+                                <nav id="main-menu">
+                                    <ul>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-file-invoice"></i> Factures <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="http://localhost:8080/invoice_list.php">Visualitzar
+                                                        Factures</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-users"></i> Clients <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta de Client</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Clients</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-shopping-cart"></i> Comandes <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Visualitzar
+                                                        Comandes</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-user-tie"></i> Empleats <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta d'Empleat</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Empleats</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-truck"></i> Proveïdors <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta
+                                                        Proveïdor</a></li>
+                                                <li><a href="http://localhost:8080/provider_list.php">Visualitzar
+                                                        Proveïdors</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="http://localhost:8080/vehicle_list.php#"><i class="fas fa-car"></i>
+                                                Vehicles <i class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta Vehicle</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Vehicles</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <div class="row">
+            <aside class="col-2 aside">
+                <nav id="main-menu">
+                    <ul>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-file-invoice"></i>
+                                Factures <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="http://localhost:8080/invoice_list.php">Visualitzar Factures</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-users"></i> Clients <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta de Client</a></li>
+                                <li><a href="#">Visualitzar Clients</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-user-tie"></i> Empleats
+                                <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta d'Empleat</a></li>
+                                <li><a href="#">Visualitzar Empleats</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-truck"></i> Proveïdors <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta Proveïdor</a></li>
+                                <li><a href="#">Visualitzar Proveïdors</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-shopping-cart"></i>
+                                Comandes <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Visualitzar Comandes</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-car"></i> Vehicles <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta Vehicle</a></li>
+                                <li><a href="#">Visualitzar Vehicles</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <article class="col-10">
+                <section>
+                    <h2>Inicis de sessió</h2>
+                    <a href="#">
+                        <button type="button" class="create-login-button">Insertar nou Vehicle</button>
+                    </a>
+                    <div class="row formulario">
+                        <h1>Dar de alta un nuevo vehículo</h1>
+    
+                        <div class="col-4"> <!-- Nombre del vehículo -->
+                            <form method="post" enctype="multipart/form-data" action="ficheropruebas.js" >
+                                <div>
+                                    <label for="nombre-vehiculo">Nombre del vehículo<abbr>*</abbr></label>
+    
+                                </div>
+                                <div>
+                                    <input required type="text" id="nombre-vehiculo" name="Nombre del vehículo"
+                                        pattern="^[A-Za-z\s]+$" placeholder="Ej. Mi coche" />
+                                    <button class="info-button" data-input-id="nombre-vehiculo">i</button>
+                                </div>
+    
+                                <!-- Marca del vehículo -->
+                                <div>
+                                    <label for="marca">Marca<abbr>*</abbr></label>
+                                </div>
+                                <div>
+                                    <input required type="text" id="marca" name="Marca" pattern="^[A-Za-z\s]+$"
+                                        placeholder="Ej. Toyota" />
+                                    <button class="info-button" data-input-id="marca">i</button>
+                                </div>
+    
+                                <!-- Modelo del vehículo respecto a su marca -->
+                                <div>
+                                    <label for="modelo">Modelo<abbr>*</abbr></label>
+                                </div>
+                                <div>
+                                    <input required type="text" id="modelo" name="Modelo" pattern="^[A-Za-z\s]+$"
+                                        placeholder="Ej. Camry" />
+                                    <button class="info-button" data-input-id="modelo">i</button>
+                                </div>
+    
+                                <!-- Matrícula Española 4 números y 3 letras -->
+                                <div>
+                                    <label for="matricula">Matrícula <abbr>*</abbr>:</label>
+                                </div>
+                                <div>
+                                    <input required type="text" id="matricula" name="Matricula" pattern="^\d{4}[A-Z]{3}$"
+                                        placeholder="Ej. 1234ABC" />
+                                    <button class="info-button" data-input-id="matricula">i</button>
+                                </div>
+    
+                                <!-- Kilometraje que tiene el vehículo -->
+                                <div>
+                                    <label for="kilometro">Kilómetros del vehículo <abbr>*</abbr>:</label>
+                                </div>
+                                <div>
+                                    <input required type="number" id="kilometro" name="Kilometro" pattern="\d+" min="1"
+                                        placeholder="Ej. 50000" />
+                                    <button class="info-button" data-input-id="kilometro">i</button>
+                                </div>
+    
+                                <!-- Número de Bastidor del vehículo -->
+                                <div>
+                                    <label for="numBast">Número de Bastidor <abbr>*</abbr>:</label>
+                                </div>
+                                <div>
+                                    <input required type="text" id="numBast" name="Número de Bastidor del vehículo"
+                                        pattern="^[A-HJ-NPR-Z0-9]{17}$" placeholder="Ej. ABC12345678901234" />
+                                    <button class="info-button" data-input-id="numBast">i</button>
+                                </div>
+    
+                                <!-- Fecha de la primera matriculación del vehículo -->
+                                <div>
+                                    <label for="fPrimerMatric">Fecha de Primera Matrícula <abbr>*</abbr>:</label>
+                                </div>
+                                <div>
+                                    <input required type="date" id="fPrimerMatric" name="Fecha de Primera Matrícula" />
+                                    <button class="info-button" data-input-id="fPrimerMatric">i</button>
+                                </div>
+    
+                                <!-- Tipo de carburante -->
+                                <div>
+                                    <label for="tipCarbur">Tipo de Carburante:</label>
+                                </div>
+                                <div>
+                                    <select name="tipCarbur" id="tipCarbur">
+                                        <option value="diesel">Diesel</option>
+                                        <option value="gasolina" selected>Gasolina</option>
+                                        <option value="electrico">Eléctrico</option>
+                                        <option value="hibrido">Híbrido</option>
+                                    </select>
+                                </div>
+    
+                                <!-- Señalización del estado del vehículo, Nuevo / Segunda mano -->
+    
+                                <!-- Señalización sobre el transporte incluido en el precio -->
+    
+                                <div>
+                                    <label for="transInc">Transporte incluido</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="transInc" value="Si" id="transInc-si">
+                                    <label for="transInc-si">Si</label>
+                                    <input type="radio" name="transInc" value="No" id="transInc-no">
+                                    <label for="transInc-no">No</label>
+                                </div>
+    
+    
+                        </div>
+    
+    
+                        <div class="col-4">
+                            <!-- Imágenes del vehículo -->
+                            <div class="imagen">
+                                <div id="imagen-preview" class="imagen-preview">
+                                    <img type="hidden" id="imagen-img" src="#" />
+                                </div>
+                                <label for="imagen">Suba sus imágenes aquí:</label>
+                                <input type="file" id="imagen" name="imagen" onchange="previewImage()" />
+    
+                            </div>
+                        </div>
+    
+    
+                        <div class="col-4">
+    
+    
+    
+                            <!-- Precio de compra al proveedor -->
+                            <div>
+                                <label for="precComp">Precio de Compra<abbr>*</abbr></label>
+                            </div>
+                            <div>
+                                <input required type="number" id="precComp" name="Precio de Compra" step="0.01"
+                                    pattern="\d+(\.\d{2})?" placeholder="Ej. 1000.00" />
+                                <button class="info-button" data-input-id="precComp">i</button>
+                            </div>
+    
+                            <!-- Precio de venta al cliente "P.V.P" -->
+                            <div>
+                                <label for="precVenta">Precio de Venta<abbr>*</abbr></label>
+                            </div>
+                            <div>
+                                <input type="number" id="precVenta" name="Precio de Venta" step="0.01"
+                                    pattern="\d+(\.\d{2})?" placeholder="Ej. 1500.00" />
+                                <button class="info-button" data-input-id="precVenta">i</button>
+                            </div>
+    
+                            <div>
+                                <label for="IVA">IVA <abbr>*</abbr>:</label>
+                            </div>
+                            <div>
+                                <input type="number" id="IVA" name="IVA" step="0.01" pattern="\d+(\.\d{2})?"
+                                    placeholder="Ej. 0.21" />
+                                <button class="info-button" data-input-id="IVA">i</button>
+                            </div>
+    
+                            <!-- Tipo de marchas que tiene el coche Automaticas / Manuales -->
+                            <div>
+                                <label for="tipMarcha">Tipo de Marcha:</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="tipMarcha-manual" name="tipMarcha" value="manual">
+                                <label for="tipMarcha-manual">Manual</label>
+                                <input type="radio" id="tipMarcha-automatico" name="tipMarcha" value="automatico">
+                                <label for="tipMarcha-automatico">Automático</label>
+                            </div>
+    
+                            <div>
+                                <label for="nuevo">Nuevo:</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="nuevo" value="Si" id="nuevo-si">
+                                <label for="nuevo-si">Si</label>
+                                <input type="radio" name="nuevo" value="No" id="nuevo-no">
+                                <label for="nuevo-no">No</label>
+                            </div>
+    
+                            <div>
+                                <input type="text" hidden id="crsf" name="crsf" />
+                            </div>
+    
+                            <div>
+                                <label for="desCom">Descripción Comercial:</label>
+                            </div>
+                            <div>
+                                <textarea id="desCom" name="Descripción Comercial"
+                                    placeholder="Ej. Vehículo en excelente estado, único dueño"></textarea>
+                                <button class="info-button" data-input-id="desCom">i</button>
+                            </div>
+    
+                            <!-- Daños observados y especificación en caso de ser afirmativo -->
+                            <div>
+                                <label for="danoObs">Daños Observados:</label>
+                            </div>
+                            <div>
+                                <textarea id="danoObs" name="Daños Observados"
+                                    placeholder="Ej. Pequeños rasguños en la parte trasera"></textarea>
+                                <button class="info-button" data-input-id="danoObs">i</button>
+                            </div>
+    
+    
+    
+                            <!-- Agrega un campo oculto con el token CSRF en el formulario -->
+                            <div>
+                                <input type="hidden" id="csrf" name="csrf" value="" />
+                            </div>
+                        </div>
+    
+                          
+                        <div class="col-12 button"><button type="submit" id="sndButton" value="Enviar">Dar de alta</button></div>
+                        </form>
+                    </div>
+        </section>
+        </article>
+        </div>
+    </main>
+
+    <section id="menu-modal" class="menu-modal">
+        <div class="menu-content">
+            <a href="#" class="close-button" onclick="closeMenuModal()">×</a>
+            <div class="user-info">
+                <img src="./Llista de vehicles_files/usuari.png" alt="Imagen de perfil">
+                <div class="user-details">
+                    <h3>carlos</h3>
+                </div>
+            </div>
+            <ul class="menu-links">
+                <li class="dropdown">
+                    <a href="#">Mis pedidos</a>
+                </li>
+                <li><a href="http://localhost:8080/invoice_list.php">Factures</a></li>
+                <li class="dropdown">
+                    <a href="#" id="administration-menu-btn">Administració</a>
+                    <ul class="dropdown-content" id="administration-menu">
+                        <li><a href="#">Configuració del compter</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="banda-amb-logo">
+            <div id="rectangle-blau">
+                <p id="titol-rectangle">BHEC</p>
+                <div id="cercle-gris">
+                    <img src="./Llista de vehicles_files/logoBHEC.png" alt="Imagen del semicírculo">
+                </div>
+            </div>
+        </div>
+
+        <div id="div-sessio">
+            <a href="http://localhost:8080/logout.php">Tancar Sessió</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="logoAndName">
+                        <img src="./Llista de vehicles_files/logoBHEC.png" alt="logo">
+                        <h2 class="h2-title">BHEC</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

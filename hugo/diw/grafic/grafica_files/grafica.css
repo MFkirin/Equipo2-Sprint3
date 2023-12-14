@@ -1,0 +1,16 @@
+/* Add this to your existing CSS file or create a new one */
+.graficas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    margin-top: 20px;
+}
+
+/* Add this to your existing CSS file or create a new one */
+#providerChart {
+    display: block;
+    margin: auto;
+    width: 300px; /* Adjust the width as needed */
+    height: 300px; /* Adjust the height as needed */
+}

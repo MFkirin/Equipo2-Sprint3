@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Estadisticas</title>
+    <link href="./grafica_files/grafica.css" rel="stylesheet">
+    <link href="./grafica_files/normalize.css" rel="stylesheet">
+    <link href="./grafica_files/grid.css" rel="stylesheet">
+    <link href="./grafica_files/style.css" rel="stylesheet">
+    <script src="./grafica_files/jquery.min.js"></script>
+    <script type="text/javascript" src="./grafica_files/chart.min.js"></script>
+    <script>
+             function toggleAdminMenu() {
+            var adminMenu = document.getElementById('admin-menu');
+            adminMenu.classList.toggle('active');
+            var closeMenu = document.getElementById('close-menu');
+            closeMenu.style.display = 'block';
+        }
+
+        function closeAdminMenu() {
+            var adminMenu = document.getElementById('admin-menu');
+            adminMenu.classList.remove('active');
+            var closeMenu = document.getElementById('close-menu');
+            closeMenu.style.display = 'none';
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="cabecera">
+                        <a href="index.html">
+                            <div id="logo">
+                                <img src="img/logoBHEC.png" alt="imagen del logo">
+                            </div>
+                        </a>
+                        <nav> <!-- Barra de navegación -->
+                            <ul>
+                                <li><a href="contacto.html"><img src="img/usuari.png"></a></li>
+                            </ul>
+                            <div id="mobile-menu-toggle" onclick="toggleAdminMenu()">&#9776;</div>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+    </header>
+    <main class="container-fluid">
+        <div class="row">
+
+            <aside class="col-2 asideLeft">
+                <nav id="admin-menu">
+                    <div id="close-menu" onclick="closeAdminMenu()">&times;</div>
+                    <h2>Menú de Administración</h2>
+                    <ul>
+                        <li><a href="wp-admin/index.php">Escritorio</a></li>
+                        <li><a href="wp-admin/movimientos.php">Movimientos</a></li>
+                        <li><a href="wp-admin/pedido.php">Pedidos</a></li>
+                        <li><a href="wp-admin/usuarios.php">Usuarios</a></li>
+                        <li><a href="wp-admin/vehiculos.php">Vehiculos</a></li>
+                        <li><a href="wp-admin/facturas.php">Facturas</a></li>
+                        <li><a href="wp-admin/ajustes.php">Ajustes</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <section class="col-10">
+                <div class="row formulario">
+                    <section class="col-10">
+                        <section class="graficas">
+                            <div class="grafica">
+                                <canvas id="providerChart"
+                                    style="display: block; box-sizing: border-box; height: 300px; width: 300px;"
+                                    width="360" height="360"></canvas>
+                            </div>
+                            <div>
+                                <canvas id="carChart"></canvas>
+                            </div>
+                        </section>
+                        <script>
+                            const graph = document.querySelector("#providerChart");
+
+                            // Use the PHP variable $encodedData to get provider data
+                            const chartData = [{ "email": "ford@gmail.com", "count": 4 }, { "email": "opel@gmail.com", "count": 2 }, { "email": "citroen@gmail.com", "count": 1 }, { "email": "volvo@gmail.com", "count": 1 }];
+
+                            const data = {
+                                labels: chartData.map(provider => provider.email),
+                                datasets: [{
+                                    data: chartData.map(provider => provider.count),
+                                    backgroundColor: generateColors(chartData.length),
+                                }]
+                            };
+
+                            const config = {
+                                type: 'pie',
+                                data: data,
+                            };
+
+                            new Chart(graph, config);
+
+                            // Function to generate different colors
+                            function generateColors(count) {
+                                const colors = [];
+                                for (let i = 0; i < count; i++) {
+                                    colors.push(getRandomColor());
+                                }
+                                return colors;
+                            }
+
+                            // Function to generate a random color
+                            function getRandomColor() {
+                                const letters = '0123456789ABCDEF';
+                                let color = '#';
+                                for (let i = 0; i < 6; i++) {
+                                    color += letters[Math.floor(Math.random() * 16)];
+                                }
+                                return color;
+                            }
+                        </script>
+                        <script>
+                            const carChart = document.getElementById('carChart').getContext('2d');
+
+                            const DATA_COUNT = 4; // Number of months
+                            const carChartData = {
+                                labels: ['January', 'February', 'March', 'April'],
+                                datasets: [
+                                    {
+                                        label: 'Positive Values',
+                                        data: getRandomData(DATA_COUNT),
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                                        borderWidth: 1,
+                                    },
+                                    {
+                                        label: 'Negative Values',
+                                        data: getRandomData(DATA_COUNT),
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                                        borderWidth: 1,
+                                    }
+                                ]
+                            };
+
+                            const carChartConfig = {
+                                type: 'bar',
+                                data: carChartData,
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Car Sales Bar Chart'
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            stacked: true,
+                                        },
+                                        y: {
+                                            stacked: true,
+                                        }
+                                    }
+                                }
+                            };
+
+                            new Chart(carChart, carChartConfig);
+
+                            // Function to generate random data
+                            function getRandomData(count) {
+                                const data = [];
+                                for (let i = 0; i < count; i++) {
+                                    data.push(Math.floor(Math.random() * 200) - 100);
+                                }
+                                return data;
+                            }
+                        </script>
+
+
+
+
+
+                    </section>
+            </section>
+        </div>
+    </main>
+</body>
+<script src="./grafica_files/jQuery.js"></script>
+
+</html>

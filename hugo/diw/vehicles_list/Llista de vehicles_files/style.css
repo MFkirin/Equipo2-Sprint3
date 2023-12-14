@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100&family=Montserrat:wght@100&family=Playfair+Display&display=swap');
+
+header {
+    background-color: rgb(24, 29, 52);
+}
+
+.cabecera{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#logo img {
+    margin-left: 5px;
+    padding: 10px;
+    width: 70px;
+    
+}
+
+aside {
+    background-color: rgb(24, 29, 52);
+    height:calc(100vh-1px) ;
+
+
+}
+
+aside h2 {
+    color: rgb(170, 142, 49);
+    font-size: 1.2rem;
+}
+
+aside nav {
+    text-align: left;
+}
+
+aside ul {
+    list-style: none;
+    margin-top: 27px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espacio entre elementos */
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: rgb(231, 211, 129);
+    /* Color de texto del header nav */
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+aside ul li a:hover {
+    border-color: rgb(170, 142, 49);
+    /* Color de resaltado al pasar el mouse */
+}
+
+
+
+
+/* Quita los estilos predeterminados de ul y a */
+header ul,
+header ul li,
+header ul li a {
+    list-style: none;
+    text-decoration: none;
+}
+
+
+
+
+/* Estiliza los elementos <a> según tus preferencias */
+header nav ul li a {
+    color: rgb(170, 142, 49);
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+nav ul li a:hover {
+    border-color: rgb(231, 211, 129);
+}
+
+.buscador {
+    margin-top: 25px;
+    margin-left: 2%;
+}
+
+.buscador input {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+body {
+    background-color: rgb(231, 231, 233);
+}
+
+.button button {
+    width: 15%;
+    background-color: rgb(170, 142, 49);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button button:hover {
+    background-color: rgb(231, 211, 129);
+}
+
+.formulario {
+    text-align: center;
+}
+
+.formulario div {
+    margin: 0px 0px 7px 0px;
+}
+
+.imagen-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-preview img {
+    max-width: 50%;
+    max-height: 50%;
+    width: auto;
+    height: auto;
+}
+
+#imagen-label {
+    cursor: pointer;
+}
+
+#imagen-label input {
+    display: none;
+}
+
+#imagen-label::before {
+    content: 'Selecciona una imagen';
+    display: block;
+    background-color: #0073e6;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#imagen-label input[type="file"]:hover+#preview {
+    display: block;
+}
+
+
+.contenedor-flex {
+    margin-top: 20px;
+    margin-bottom: 20px ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.item {
+    flex: 0 0 calc(20%); /* Cuatro elementos por fila con espacio entre ellos */
+    box-sizing: border-box;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+
+
+#editar{
+    position: absolute;
+    top: 5px;
+    right: 2px;
+}
+
+#editar img{
+    width: 20px;
+    height: 100%;
+}
+#editar a:hover{
+    cursor:pointer ;
+}
+.item:hover {
+    transform: scale(1.05);
+}
+
+.item-top {
+    border-bottom: 2px solid #ddd;
+}
+
+.item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.item-bottom {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.item h3 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.item-text {
+    text-align: left;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.item-text span {
+    color: #555;
+}
+
+/* Improved CSS for Pager */
+.pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pager button {
+    background-color: rgb(170, 142, 49);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pager button:hover {
+    background-color: rgb(231, 211, 129);
+}
+
+.pager p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+
+
+@media (max-width: 480px) {
+    .item {
+        flex-basis: calc(50%); /* Dos elementos por fila en pantallas pequeñas */
+    }
+}
+
+/* Media query para mostrar el botón de hamburguesa en dispositivos móviles */
+@media (max-width: 802px) {
+    .buscador{
+        
+       display:flex;
+       align-items: center;
+        justify-content: center;
+
+    }
+    
+
+    .item {
+        flex-basis: calc(90%);
+        /* Un elemento por fila en pantallas pequeñas */
+    }
+
+    
+}
+

@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100&family=Montserrat:wght@100&family=Playfair+Display&display=swap');
+
+header {
+    background-color: rgb(24, 29, 52);
+}
+
+#logo img {
+    padding: 10px;
+    width: 80px;
+}
+
+aside {
+    background-color: rgb(24, 29, 52);
+    width: 100%;
+
+}
+
+aside h2 {
+    color: rgb(170, 142, 49);
+    font-size: 1.2rem;
+}
+
+aside nav {
+    text-align: left;
+}
+
+aside ul {
+    list-style: none;
+    margin-top: 27px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espacio entre elementos */
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: rgb(231, 211, 129);
+    /* Color de texto del header nav */
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+aside ul li a:hover {
+    border-color: rgb(170, 142, 49);
+    /* Color de resaltado al pasar el mouse */
+}
+
+
+header nav {
+    text-align: center;
+    padding: auto;
+}
+
+/* Quita los estilos predeterminados de ul y a */
+header ul,
+header ul li,
+header ul li a {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+/* Aplica un espacio entre los elementos */
+header nav ul {
+    margin-top: 27px;
+    text-align: right;
+
+}
+
+/* Estiliza los elementos <a> según tus preferencias */
+header nav ul li a {
+    color: rgb(170, 142, 49);
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+nav ul li a:hover {
+    border-color: rgb(231, 211, 129);
+}
+
+.buscador {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.buscador input {
+    border: none;
+    border-radius: 10px 0 0 10px;
+    padding: 10px;
+}
+
+.buscador button {
+    border: none;
+    border-radius: 0 10px 10px 0;
+    padding: 4px;
+    cursor: pointer;
+    background-color: rgb(170, 142, 49);
+}
+
+.buscador img {
+    width: 24px;
+    height: 24px;
+}
+
+body {
+    background-color: rgb(231, 231, 233);
+}
+
+.button button {
+    width: 15%;
+    background-color: rgb(170, 142, 49);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button button:hover {
+    background-color: rgb(231, 211, 129);
+}
+
+.formulario {
+    text-align: center;
+}
+
+.formulario div {
+    margin: 0px 0px 7px 0px;
+}
+
+.imagen{
+    border: solid 1px  black;
+    padding: 40px;
+}
+
+.imagen-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-preview img {
+    max-width: 50%;
+    max-height: 50%;
+    width: auto;
+    height: auto;
+}
+
+#imagen-label {
+    cursor: pointer;
+}
+
+#imagen-label input {
+    display: none;
+}
+
+#imagen-label::before {
+    content: 'Selecciona una imagen';
+    display: block;
+    background-color: #0073e6;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#imagen-label input[type="file"]:hover+#preview {
+    display: block;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radio-group div {
+    width: 10%;
+}
+
+.button {
+    text-align: center;
+}
+
+.button button {
+    width: 10%;
+}
+
+
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    right: 1px;
+    top: 1px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.close:hover {
+    background: #FAAC58;
+    color: #222;
+}
+
+.caja {
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+    margin: 10px;
+    display: inline-block;
+}
+
+/* Estilo para el botón de hamburguesa en dispositivos móviles */
+#mobile-menu-toggle {
+    display: none; /* Inicialmente oculto en dispositivos móviles */
+    cursor: pointer;
+    color: rgb(170, 142, 49);
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Media query para mostrar el botón de hamburguesa en dispositivos móviles */
+@media (max-width: 802px) {
+    #mobile-menu-toggle {
+        display: block; /* Muestra el botón de hamburguesa en dispositivos móviles */
+    }
+
+    #admin-menu {
+        display: none; /* Inicialmente oculto en dispositivos móviles */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #admin-menu.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    #admin-menu h2{
+        margin-left: 10px;
+        font-size: 3em;
+
+    }
+
+    #admin-menu nav {
+        text-align: center;
+        margin-top: 10%;
+        margin-left: 10%;
+    }
+
+    #admin-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #admin-menu ul li {
+        margin-bottom: 20px;
+        margin-left: 20px;
+    }
+
+    #admin-menu ul li a {
+        text-decoration: none;
+        color: rgb(231, 211, 129);
+        font-weight: bold;
+        font-size: 2em;
+        transition: color 0.3s;
+    }
+
+    #admin-menu ul li a:hover {
+        color: rgb(170, 142, 49);
+    }
+
+    #close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: rgb(231, 211, 129);
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+    }
+}
+/* Agregamos el estilo cuando #admin-menu está activo */
+#admin-menu.active {
+    display: block;
+}
+
+/* Agregamos el estilo cuando #admin-menu está activo */
+#admin-menu.active {
+    display: block;
+}
+
+/* Agregamos el estilo cuando #admin-menu está activo */
+#admin-menu.active {
+    display: block;
+}
+
+/* Estilo para el botón de cerrar en dispositivos móviles */
+#close-menu {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: rgb(231, 211, 129);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de cerrar cuando el menú está activo */
+#admin-menu:target #close-menu {
+    display: block;
+}
+
+/* Estilo para el botón de cerrar al pasar el ratón sobre él */
+#close-menu:hover {
+    color: rgb(170, 142, 49);
+}
+
+

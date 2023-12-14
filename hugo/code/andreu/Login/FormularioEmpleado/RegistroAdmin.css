@@ -1,7 +1,0 @@
-
-.error {
-    color: red;
-}
-input[type="text"]:invalid {
-    background: red;
-}

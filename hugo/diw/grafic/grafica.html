@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038) -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista de factures</title>
+    <link href="./grafica_files/Normalize.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/grid.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/backoffice-skeleton.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/styles_order.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/modal.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/content-back.css" type="text/css" rel="stylesheet">
+    <link href="./grafica_files/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="./grafica_files/all.min.css">
+    <link href="./grafica_files/grafica.css" rel="stylesheet">
+    
+    <!-- JavaScript -->
+    <script src="./grafica_files/jquery-3.7.0.js"></script>
+    <script src="./grafica_files/jquery.tablesorter.min.js"
+        integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./grafica_files/jquery-3.7.0.js" defer=""></script>
+    <script src="./grafica_files/modal.js" defer=""></script>
+    <script src="./grafica_files/searcher.js" defer=""></script>
+    <script src="./grafica_files/menu_aside.js" defer=""></script>
+    <script src="./grafica_files/menu-burguer.js" defer=""></script>
+    <script src="./grafica_files/form_proveedores.js" defer=""></script>
+    <script src="./grafica_files/taules.js" defer=""></script>
+    <script src="./grafica_files/tableSorter.js" defer=""></script>
+    <script type="text/javascript" src="./grafica_files/chart.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="headerDiv">
+                        <a href="#">
+                            <div id="logoAndNav">
+                                <img src="./grafica_files/logoBHEC.png" alt="Logo">
+                            </div>
+                        </a>
+                        <nav id="menu-desktop" class="navIcons">
+                            <a href="#"><img
+                                    src="./grafica_files/usuari-Groc.png" alt="user" class="icon"
+                                    id="usuari"></a>
+                        </nav>
+
+                        <nav id="menu-mobile">
+                            <div id="burger">
+                                <span class="line1"></span>
+                                <span class="line2"></span>
+                                <span class="line3"></span>
+                            </div>
+                            <div class="ocultMenu">
+                                <nav id="main-menu">
+                                    <ul>
+                                        <li class="submenu">
+                                            <a href="#"><i
+                                                    class="fas fa-file-invoice"></i> Factures <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="http://localhost:8080/invoice_list.php">Visualitzar
+                                                        Factures</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i
+                                                    class="fas fa-users"></i> Clients <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta de Client</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Clients</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i
+                                                    class="fas fa-shopping-cart"></i> Comandes <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Visualitzar
+                                                        Comandes</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i
+                                                    class="fas fa-user-tie"></i> Empleats <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta d'Empleat</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Empleats</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i
+                                                    class="fas fa-truck"></i> Proveïdors <i
+                                                    class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta
+                                                        Proveïdor</a></li>
+                                                <li><a href="#">Visualitzar
+                                                        Proveïdors</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu">
+                                            <a href="#"><i class="fas fa-car"></i>
+                                                Vehicles <i class="fas fa-chevron-right"></i></a>
+                                            <ul class="submenu-content">
+                                                <li><a href="#">Alta Vehicle</a>
+                                                </li>
+                                                <li><a href="#">Visualitzar
+                                                        Vehicles</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <div class="row">
+            <aside class="col-2 aside">
+                <nav id="main-menu">
+                    <ul>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-file-invoice"></i>
+                                Factures <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Visualitzar Factures</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-users"></i> Clients <i
+                                    class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta de Client</a></li>
+                                <li><a href="#">Visualitzar Clients</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-user-tie"></i> Empleats
+                                <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta d'Empleat</a></li>
+                                <li><a href="#">Visualitzar Empleats</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-truck"></i> Proveïdors <i
+                                    class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta Proveïdor</a></li>
+                                <li><a href="#">Visualitzar Proveïdors</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-shopping-cart"></i>
+                                Comandes <i class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Visualitzar Comandes</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-car"></i> Vehicles <i
+                                    class="fas fa-chevron-right"></i></a>
+                            <ul class="submenu-content">
+                                <li><a href="#">Alta Vehicle</a></li>
+                                <li><a href="#">Visualitzar Vehicles</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <article class="col-10">
+                <section>
+                    <h2>Grafiques</h2>  
+                    <section class="graficas">
+                        <div class="grafica">
+                            <canvas id="providerChart"
+                                style="display: block; box-sizing: border-box; height: 300px; width: 300px;"
+                                width="360" height="360"></canvas>
+                        </div>
+                        <div>
+                            <canvas id="carChart"></canvas>
+                        </div>
+                    </section>
+                    
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <section id="menu-modal" class="menu-modal">
+        <div class="menu-content">
+            <a href="#" class="close-button" onclick="closeMenuModal()">×</a>
+            <div class="user-info">
+                <img src="./grafica_files/usuari.png" alt="Imagen de perfil">
+                <div class="user-details">
+                    <h3>carlos</h3>
+                </div>
+            </div>
+            <ul class="menu-links">
+                <li class="dropdown">
+                    <a href="#">Mis pedidos</a>
+                </li>
+                <li><a href="http://localhost:8080/invoice_list.php">Factures</a></li>
+                <li class="dropdown">
+                    <a href="#" id="administration-menu-btn">Administració</a>
+                    <ul class="dropdown-content" id="administration-menu">
+                        <li><a href="#">Configuració del compter</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="banda-amb-logo">
+            <div id="rectangle-blau">
+                <p id="titol-rectangle">BHEC</p>
+                <div id="cercle-gris">
+                    <img src="./grafica_files/logoBHEC.png" alt="Imagen del semicírculo">
+                </div>
+            </div>
+        </div>
+
+        <div id="div-sessio">
+            <a href="http://localhost:8080/logout.php">Tancar Sessió</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="logoAndName">
+                        <img src="./grafica_files/logoBHEC.png" alt="logo">
+                        <h2 class="h2-title">BHEC</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+<script>
+    const graph = document.querySelector("#providerChart");
+
+    // Use the PHP variable $encodedData to get provider data
+    const chartData = [{ "email": "ford@gmail.com", "count": 4 }, { "email": "opel@gmail.com", "count": 2 }, { "email": "citroen@gmail.com", "count": 1 }, { "email": "volvo@gmail.com", "count": 1 }];
+
+    const data = {
+        labels: chartData.map(provider => provider.email),
+        datasets: [{
+            data: chartData.map(provider => provider.count),
+            backgroundColor: generateColors(chartData.length),
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+    };
+
+    new Chart(graph, config);
+
+    // Function to generate different colors
+    function generateColors(count) {
+        const colors = [];
+        for (let i = 0; i < count; i++) {
+            colors.push(getRandomColor());
+        }
+        return colors;
+    }
+
+    // Function to generate a random color
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+</script>
+<script>
+    const carChart = document.getElementById('carChart').getContext('2d');
+
+    const DATA_COUNT = 4; // Number of months
+    const carChartData = {
+        labels: ['January', 'February', 'March', 'April'],
+        datasets: [
+            {
+                label: 'Positive Values',
+                data: getRandomData(DATA_COUNT),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderWidth: 1,
+            },
+            {
+                label: 'Negative Values',
+                data: getRandomData(DATA_COUNT),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderWidth: 1,
+            }
+        ]
+    };
+
+    const carChartConfig = {
+        type: 'bar',
+        data: carChartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Car Sales Bar Chart'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
+                }
+            }
+        }
+    };
+
+    new Chart(carChart, carChartConfig);
+
+    // Function to generate random data
+    function getRandomData(count) {
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            data.push(Math.floor(Math.random() * 200) - 100);
+        }
+        return data;
+    }
+</script>
+</html>
